@@ -6,6 +6,12 @@
             <Todo /> 
             <Todo /> 
             <Todo /> 
+            <Todo />
+            <Todo /> 
+            <Todo /> 
+            <Todo /> 
+            <Todo /> 
+            <Todo /> 
     </div>
 </template>
 
@@ -20,7 +26,8 @@ export default {
 
 <style>
     .todos-container{
-        padding-left: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
         padding-bottom: 20px;
         height: 20vw;
     }

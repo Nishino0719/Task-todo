@@ -2,15 +2,47 @@
 <div class="todo-containers">
     <div class="todo-container">
         <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
-        <el-tag size="medium" type="danger">情報通信工学実験</el-tag>
-        <p class="deadline">締め切り：2020/06/14 12:00:00</p>
-            <h4>
-                <span class="countdown">残り時間</span>
-            </h4>
+        <el-tag size="medium" type="danger" effect="plain">情報通信工学実験</el-tag>
+        <el-tag type="danger">今日中</el-tag>
+        <!-- <el-tag type="warning">三日後</el-tag>
+        <el-tag type="info">1週間後</el-tag> -->
+        <p class="deadline">締め切り：2020/06/14</p>
+            <p>
+                <span class="countdown">残り時間：</span>
+            </p>
             <p class="detail">
                 未来の自分へ：
             </p>
-            <p class="detail-text">頑張ってね！</p>
+            <p class="detail-text">俺は今日遊ぶから頑張れwwwww</p>
+    </div>
+    <div class="todo-container">
+        <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
+        <el-tag size="medium" type="info" effect="plain">プログラミング設計</el-tag>
+        <!-- <el-tag type="danger">今日中</el-tag> -->
+        <!-- <el-tag type="warning">三日後</el-tag> -->
+        <!-- <el-tag type="info">1週間後</el-tag> -->
+        <el-tag type="succes">まだ余裕</el-tag>
+        <p class="deadline">締め切り：2020/08/19</p>
+            <p>
+                <span class="countdown">残り時間：</span>
+            </p>
+            <p class="detail">
+                未来の自分へ：
+            </p>
+            <p class="detail-text">wordファイルでの提出、学籍番号.pdfでも可能</p>
+    </div>
+    <div class="todo-container">
+        <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
+        <el-tag size="medium" type="" effect="plain">アルゴリズム設計</el-tag>
+        <el-tag type="warning">三日後</el-tag>
+        <p class="deadline">締め切り：2020/06/17</p>
+            <p>
+                <span class="countdown">残り時間：</span>
+            </p>
+            <p class="detail">
+                未来の自分へ：
+            </p>
+            <p class="detail-text">めんどくさいから放置しまーす未来の俺に全部たくしまーすよろしくお願いしまーす</p>
     </div>
 </div>
 </template>
