@@ -18,9 +18,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     .todos-container{
-        margin-left: 30px;
+        padding-left: 30px;
+        padding-bottom: 20px;
+        height: 20vw;
     }
 
 </style>

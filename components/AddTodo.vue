@@ -91,6 +91,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  .add-todo_box{
+    border: 0.4px solid rgba(41, 41, 41, .8);
+    border-radius: 40px;
+    padding: 20px;
+    margin: 0 200px;
+  }
 </style>

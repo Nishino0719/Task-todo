@@ -58,13 +58,6 @@ export default {
 <style>
 html {
   font-family: 'Oswald', sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
 }
 
 .app-layout {
@@ -82,14 +75,11 @@ html {
 }
 
 .sidebar {
-  width: auto;
-  /* height: 100vh; */
+  height: 100vh;
 }
 
-.main-content {
- width: 100%;
- /* background: #f2f2f2; */
- /* height: 100vh; */
+.main-content{
+  height: 100vh;
 }
 
 
