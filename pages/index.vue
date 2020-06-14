@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-
-      <div class="todos-container">
+      <div class="todos-title_container">
+        <el-badge :value="12" class="item"  type="primary">
+          <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
+        </el-badge>
+        <el-badge :value="5" class="item"  type="primary">
+          <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
+        </el-badge>
+      </div>
+      <div class="todos-containers">
         <Todos />
       </div>
       <div class="add-todo_container">
@@ -25,10 +32,25 @@ export default {
 <style>
 
 .container{
-  background: #f2f2f2;
+  background: #d0d0d0;
 }
-  .todos-container{
-    height: 55vh;
+
+  .todos-title_container{
+    height: 10vh;
+    display: flex;
+  }
+  .item{
+    margin: 20px;
+  }
+
+  .todos-title_container img{
+    border-radius: 10px;
+    width: 90px;
+    margin-left: 47%;
+  }
+
+  .todos-containers{
+    height: 45vh;
     overflow: scroll;
   }
 
@@ -43,6 +65,5 @@ export default {
 
   .todo-main{
     width: 100%;
-    background: #f2f2f2;
   }
 </style>

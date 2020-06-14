@@ -2,47 +2,19 @@
 <div class="todo-containers">
     <div class="todo-container">
         <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
-        <el-tag size="medium" type="danger" effect="plain">情報通信工学実験</el-tag>
-        <el-tag type="danger">今日中</el-tag>
+        <el-tag size="medium" type="danger" effect="plain">{{task.subject}}</el-tag>
+        <el-tag type="danger">{{task.level}}</el-tag>
         <!-- <el-tag type="warning">三日後</el-tag>
         <el-tag type="info">1週間後</el-tag> -->
-        <p class="deadline">締め切り：2020/06/14</p>
+        <!-- <el-tag type="success">まだ余裕</el-tag> -->
+        <p class="deadline">締め切り：{{task.deadline}}</p>
             <p>
-                <span class="countdown">残り時間：</span>
+                <span class="countdown">あと{{task.limit}}</span>
             </p>
             <p class="detail">
                 未来の自分へ：
             </p>
-            <p class="detail-text">俺は今日遊ぶから頑張れwwwww</p>
-    </div>
-    <div class="todo-container">
-        <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
-        <el-tag size="medium" type="info" effect="plain">プログラミング設計</el-tag>
-        <!-- <el-tag type="danger">今日中</el-tag> -->
-        <!-- <el-tag type="warning">三日後</el-tag> -->
-        <!-- <el-tag type="info">1週間後</el-tag> -->
-        <el-tag type="succes">まだ余裕</el-tag>
-        <p class="deadline">締め切り：2020/08/19</p>
-            <p>
-                <span class="countdown">残り時間：</span>
-            </p>
-            <p class="detail">
-                未来の自分へ：
-            </p>
-            <p class="detail-text">wordファイルでの提出、学籍番号.pdfでも可能</p>
-    </div>
-    <div class="todo-container">
-        <el-button type="info" v-model="checked" icon="el-icon-check" circle size="mini" @click="done"></el-button>
-        <el-tag size="medium" type="" effect="plain">アルゴリズム設計</el-tag>
-        <el-tag type="warning">三日後</el-tag>
-        <p class="deadline">締め切り：2020/06/17</p>
-            <p>
-                <span class="countdown">残り時間：</span>
-            </p>
-            <p class="detail">
-                未来の自分へ：
-            </p>
-            <p class="detail-text">めんどくさいから放置しまーす未来の俺に全部たくしまーすよろしくお願いしまーす</p>
+            <p class="detail-text">{{task.detailText}}</p>
     </div>
 </div>
 </template>
@@ -55,7 +27,18 @@
     },
     data(){
         return{
-            checked: true
+            checked: true,
+            task:{
+                subject:'情報通信工学実験',
+                level:'今日中',
+                deadline: '2020/06/14',
+                limit:'作成中',
+                detailText:'未来の自分がんばってね！',
+                user:{
+                    name: 'SHA256',
+
+                }
+            }
         }
     },
     methods:{
@@ -75,16 +58,10 @@
 }
 
 .todo-container{
-    margin-left: 30px;
-    margin-right: 50px;
-    /* display: flex; */
+    margin: 10px 10px;
     border: 0.1px solid rgba(41, 41, 41, .2);
     border-radius: 15px;
-    padding-left:10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    padding: 10px;
     width: 250px;
 }
 
@@ -96,7 +73,7 @@
     display: inline-block;
 }
 
-h4{
+p{
     text-align: center;
     margin: 0;
 }

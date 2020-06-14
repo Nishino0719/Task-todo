@@ -27,7 +27,7 @@
                     </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="未来の自分へ">
+                <el-form-item label="未来の自分へ" required  prop="desc">
                     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                 </el-form-item>
                 <el-form-item size="large">
@@ -51,7 +51,7 @@ export default {
             },
             rules: {
                     subject: [
-                    { required: true, message: '課題を選択してください！', trigger: 'change' }
+                    {required: true, message: '課題を選択してください！', trigger: 'change' }
                 ],
                     date1: [
                     { type: 'date', required: true, message: '日付を選んでください！', trigger: 'change' }
@@ -60,7 +60,7 @@ export default {
                     { type: 'date', required: true, message: '時間を選んでください！', trigger: 'change' }
                 ],
                     desc:  [
-                        {type: 'desc', required:false, message: 'eheheheh', trigger: 'change'}
+                        {type: 'desc', required:false, message: 'eheheheh', trigger: 'blur'}
                 ],
             }
       };
@@ -95,7 +95,7 @@ export default {
   .add-todo_box{
     border: 0.4px solid rgba(41, 41, 41, .8);
     border-radius: 40px;
-    padding: 20px;
+    padding: 15px;
     margin: 20px 20vw;
   }
 </style>
