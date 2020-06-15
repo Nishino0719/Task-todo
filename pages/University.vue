@@ -1,6 +1,7 @@
 <template>
   <div class="container">
       <div class="todos-title_container">
+          <h3>大学</h3>
         <el-badge :value="12" class="item"  type="primary">
           <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
         </el-badge>
@@ -61,6 +62,7 @@ export default {
 
   .todo-side{
     width: 140px;
+    background: #fafafa;
   }
 
   .todo-main{

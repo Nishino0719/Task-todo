@@ -37,7 +37,6 @@ export default {
 <style>
 
      .limit-tag{
-        margin-left: 50px;
         font-size: 24px;
         border-radius: 15px;
         padding: 6px;
@@ -48,6 +47,7 @@ export default {
         padding-bottom: 20px;
         display: inline-block;
         text-align: center;
+        width: 100%;
     }
 
 </style>

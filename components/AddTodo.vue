@@ -27,12 +27,12 @@
                     </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="未来の自分へ" required  prop="desc">
+                <el-form-item label="未来の自分へ" prop="desc">
                     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
                 </el-form-item>
                 <el-form-item size="large">
-                    <el-button type="primary"  @click="submitForm('ruleForm'), open1()">追加</el-button>
-                    <el-button @click="resetForm('ruleForm')">リセット</el-button>
+                    <el-button type="primary" size="mini" @click="submitForm('ruleForm'), open1()">追加</el-button>
+                    <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
                 </el-form-item>
             </el-form>
 
@@ -60,7 +60,7 @@ export default {
                     { type: 'date', required: true, message: '時間を選んでください！', trigger: 'change' }
                 ],
                     desc:  [
-                        {type: 'desc', required:false, message: 'eheheheh', trigger: 'blur'}
+                    { required: false, message: '', trigger: 'blur' }
                 ],
             }
       };
@@ -96,6 +96,6 @@ export default {
     border: 0.4px solid rgba(41, 41, 41, .8);
     border-radius: 40px;
     padding: 15px;
-    margin: 20px 20vw;
+    margin:15px 5vw;
   }
 </style>
