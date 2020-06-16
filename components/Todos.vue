@@ -1,5 +1,5 @@
 <template>
-    <div class="todos-container">
+    <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
         <div class="limit-today">
             <Todo />
@@ -42,7 +42,7 @@ export default {
         padding: 6px;
         height: auto;
     }
-    .todos-container{
+    .todos-component{
         padding-left:   10px;
         padding-bottom: 20px;
         display: inline-block;

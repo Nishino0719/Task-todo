@@ -3,15 +3,15 @@
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
                 <el-form-item label="科目" required prop="subject">
                     <el-select v-model="ruleForm.subject" placeholder="科目を選んでね！">
-                    <el-option label="情報通信工学実験" value="Ex"></el-option>
-                    <el-option label="アルゴリズム設計" value="AD"></el-option>
-                    <el-option label="プログラム設計" value="PD"></el-option>
-                    <el-option label="科学技術の社会史" value="Sc"></el-option>
-                    <el-option label="ゲーム理論" value="GT"></el-option>
-                    <el-option label="確率統計" value="PS"></el-option>
-                    <el-option label="中国語" value="Ch"></el-option>
-                    <el-option label="論理設計" value="LD"></el-option>
-                    <el-option label="英語ⅤC" value="En"></el-option>
+                    <el-option label="情報通信工学実験" value="情報通信工学実験"></el-option>
+                    <el-option label="アルゴリズム設計" value="アルゴリズム設計"></el-option>
+                    <el-option label="プログラム設計" value="プログラム設計"></el-option>
+                    <el-option label="科学技術の社会史" value="科学技術の社会史"></el-option>
+                    <el-option label="ゲーム理論" value="ゲーム理論"></el-option>
+                    <el-option label="確率統計" value="確率統計"></el-option>
+                    <el-option label="中国語" value="中国語"></el-option>
+                    <el-option label="論理設計" value="論理設計"></el-option>
+                    <el-option label="英語ⅤC" value="英語ⅤC"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="課題締め切り" required>
@@ -34,6 +34,7 @@
                     <el-button type="primary" size="mini" @click="submitForm('ruleForm'), open1()">追加</el-button>
                     <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
                 </el-form-item>
+                {{nishino}}
             </el-form>
 
     </div>
@@ -43,6 +44,7 @@
 export default {
     data(){
         return {
+            nishino:'hogehoge',
             ruleForm: {
                 subject: '',
                 date1: '',
@@ -83,6 +85,9 @@ export default {
           message: 'タスクが新たに追加されました！',
           type: 'success'
         });
+        console.log(this.ruleForm.subject)
+        console.log(this.ruleForm.date1)
+        console.log(this.ruleForm.date2)
       },
       resetForm(formName){
         this.$refs[formName].resetFields();

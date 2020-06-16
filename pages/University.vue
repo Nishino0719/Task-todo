@@ -9,7 +9,7 @@
           <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
         </el-badge>
       </div>
-      <div class="todos-containers">
+      <div class="todos-container">
         <Todos />
       </div>
       <div class="add-todo_container">
@@ -50,7 +50,7 @@ export default {
     margin-left: 47%;
   }
 
-  .todos-containers{
+  .todos-container{
     height: 40vh;
     overflow-x: hidden;
     overflow-y: scroll;
