@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "element-ui": "^2.13.2",
+    "firebase": "^7.15.1",
     "moment": "^2.26.0",
     "nuxt": "^2.0.0"
   },

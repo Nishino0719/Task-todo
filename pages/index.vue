@@ -6,10 +6,19 @@
 </template>
 
 <script>
+// import {db} from '~/plugins/firebase'
 
 export default {
   components: {
-  }
+  },
+  // mounted(){
+  //   db.collection('channels').get()
+  //   .then((querySnapshot)=>{
+  //     querySnapshot.forEach(function(doc){
+  //       console.log(doc.id, "=>", doc.data())
+  //     })
+  //   })
+  // }
 }
 </script>
 

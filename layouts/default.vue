@@ -14,10 +14,9 @@
             </template>
             <el-menu-item-group>
               <span slot="title">君かっこいいね</span>
-              <el-menu-item index="1-1"  @click="isCollapse = true" >大学</el-menu-item>
-              <el-menu-item index="1-2"  @click="isCollapse = true" >開発</el-menu-item>
-              <el-menu-item index="1-3"  @click="isCollapse = true" >仕事</el-menu-item>
-              <el-menu-item index="1-4"  @click="isCollapse = true" >プライベート</el-menu-item>
+              <el-menu-item v-bind:key="channel.name" v-for="channel in channels" index="1-1"  @click="isCollapse = true" >
+                <nuxt-link :to="'/channels/${channel.id}'">{{channel.name}}</nuxt-link>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="2">
@@ -40,7 +39,6 @@
       <i class="el-icon-location">福岡県飯塚市</i>
       <i class="el-icon-s-promotion">お問い合わせはこちら</i>
       <i class="el-icon-share">シェアする</i>
-
       <p>&copy;2020 Nishino</p>
     </div>
   </div>
@@ -52,13 +50,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'
+import {db} from '~/plugins/firebase'
 
 locale.use(lang)
 Vue.use(ElementUI)
 export default {
   data() {
       return {
-        isCollapse: true
+        isCollapse: true,
+        channels: []
       };
     },
     methods: {
@@ -66,7 +66,15 @@ export default {
       },
       handleClose(key, keyPath) {
       }
-    }
+    },
+    mounted(){
+    db.collection('channels').get()
+    .then((querySnapshot)=>{
+      querySnapshot.forEach((doc) =>{
+        this.channels.push({id: doc.id, ...doc.data()})
+      })
+    })
+  }
 }
 </script>
 
