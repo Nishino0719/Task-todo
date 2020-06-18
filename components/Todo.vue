@@ -11,7 +11,7 @@
         <el-popconfirm confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-close" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
-        <h1>{{task.date}}</h1>
+        <h3>{{task.test}}</h3>
         <h5 class="deadline">締め切り：{{task.deadline}}</h5>
             <h4>
                 <span class="countdown">あと {{task.nowdate}}</span>
@@ -47,6 +47,7 @@ console.log(output)
                 detailText:'未来の自分がんばってね！',
                 date: moment(60*10*1000),
                 nowdate:moment().format('DD日HH時間mm分ss秒'),
+                test:moment().format('YYYY年MM月DD日 HH:mm:ss dddd'),
                 user:{
                     name: 'SHA256',
 
