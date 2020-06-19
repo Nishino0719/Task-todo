@@ -131,7 +131,7 @@ h5{
 .detail{
     /* display: inline-block; */
     height: 50px;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 </style>

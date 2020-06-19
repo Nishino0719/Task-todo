@@ -14,8 +14,8 @@
             </template>
             <el-menu-item-group>
               <span slot="title">君かっこいいね</span>
-              <el-menu-item v-bind:key="channel.id" v-for="channel in channels" index="1-1"  @click="isCollapse = true" >
-                <nuxt-link :to="`/channels/${channel.id}`">{{channel.name}}</nuxt-link>
+              <el-menu-item v-bind:key="channel.id" v-for="channel in channels" index="1-1"  @click="isCollapse = true">
+                <nuxt-link :to="`/channels/${channel.id}`" class="channel" >{{channel.name}}</nuxt-link>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -100,6 +100,10 @@ html {
 
 .sidebar {
   height: 90vh;
+}
+
+.channel{
+  display: block;
 }
 
 .main-content{
