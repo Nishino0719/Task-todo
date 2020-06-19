@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import {db} from '~/plugins/firebase'
 export default {
     data(){
         return {
@@ -72,8 +73,18 @@ export default {
         this.$refs[formName].validate((valid) => {
           if(valid){
             alert('submit!');
+            console.log(this.ruleForm.subject)
+            console.log(this.ruleForm.date1)
+            console.log(this.ruleForm.date2)
+            console.log(this.ruleForm.text)
+            const channelId = this.$route.params.id
+            db.collection('channels').doc(channelId).collection('tasks').add({
+              text: this.ruleForm.text,
+              subject: this.ruleForm.subject,
+              deadline: this.ruleForm.date1,
+              done:false
+            })
           }else{
-            console.log('error submit!!');
             return false;
           }
         });
@@ -86,10 +97,6 @@ export default {
             message: 'タスクが新たに追加されました！',
             type: 'success'
           });
-          console.log(this.ruleForm.subject)
-          console.log(this.ruleForm.date1)
-          console.log(this.ruleForm.date2)
-          console.log(this.ruleForm.text)
         }else{
           console.log('errorですよ')
         }
