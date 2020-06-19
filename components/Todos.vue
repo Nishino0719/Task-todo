@@ -2,24 +2,20 @@
     <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
         <div class="limit-today">
-            <Todo />
-            <Todo /> 
-            <Todo /> 
-            <Todo />
+           <Todo v-bind:key="task.text" v-for="task in tasks" :task="task"/>
         </div>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
         <div class="limit-3days_after">
-            <Todo /> 
-            <Todo /> 
+          
         </div>
         <el-tag type="info" class="limit-tag">締め切り1週間以内</el-tag>
         <div class="limit-1week_after">
-            <Todo /> 
+        
 
         </div>
         <el-tag type="success" class="limit-tag">まだまだ余裕!</el-tag>
         <div class="limit-more_than">
-            <Todo /> 
+            
             
         </div>
     </div>
@@ -28,8 +24,12 @@
 <script>
 import Todo from '~/components/Todo.vue'
 export default {
+    props: ['tasks'],
     components:{
         Todo
+    },
+    mounted(){
+        console.log(this.tasks)
     }
 }
 </script>

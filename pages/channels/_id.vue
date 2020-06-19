@@ -10,7 +10,7 @@
         </el-badge>
       </div>
       <div class="todos-container">
-        <Todos />
+        <Todos :tasks="tasks"/>
       </div>
       <div class="add-todo_container">
         <AddTodo />
@@ -40,7 +40,7 @@ export default {
           querySnapshot.forEach((doc) =>{
               this.tasks.push({id: doc.id, ...doc.data()})
           })
-          console.log(this.tasks)
+        //   console.log(this.tasks)
       })
   }
 }
