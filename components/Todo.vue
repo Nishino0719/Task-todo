@@ -67,16 +67,6 @@ console.log(output)
             }
         }
     },
-    // computed:{
-    //     time: function(){
-    //         return this.task.date.format('mm:ss')
-    //     }
-    // },
-    // mounted: function(){
-    //     setInterval(() =>{
-    //         this.task.date = moment(this.task.date.subtract(1, 'second'))
-    //     }, 1000)
-    // }
   }
 </script>
 

@@ -27,11 +27,11 @@
                     </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="未来の自分へ" prop="desc">
-                    <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+                <el-form-item label="未来の自分へ" prop="text">
+                    <el-input type="textarea" v-model="ruleForm.text"></el-input>
                 </el-form-item>
                 <el-form-item size="large">
-                    <el-button type="primary" size="mini" @click="submitForm('ruleForm'), open1()">追加</el-button>
+                    <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
                     <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
                 </el-form-item>
                 {{nishino}}
@@ -49,7 +49,7 @@ export default {
                 subject: '',
                 date1: '',
                 date2: '',
-                desc:''          
+                text:''          
             },
             rules: {
                     subject: [
@@ -61,7 +61,7 @@ export default {
                     date2: [
                     { type: 'date', required: true, message: '時間を選んでください！', trigger: 'change' }
                 ],
-                    desc:  [
+                    text:  [
                     { required: false, message: '', trigger: 'blur' }
                 ],
             }
@@ -78,16 +78,21 @@ export default {
           }
         });
       },
-      open1() {
+      addTask() {
         //   成功した時のみにしなきゃ
-        this.$notify({
-          title: '成功！',
-          message: 'タスクが新たに追加されました！',
-          type: 'success'
-        });
-        console.log(this.ruleForm.subject)
-        console.log(this.ruleForm.date1)
-        console.log(this.ruleForm.date2)
+        if( this.ruleForm.subject !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== ''){
+          this.$notify({
+            title: '成功！',
+            message: 'タスクが新たに追加されました！',
+            type: 'success'
+          });
+          console.log(this.ruleForm.subject)
+          console.log(this.ruleForm.date1)
+          console.log(this.ruleForm.date2)
+          console.log(this.ruleForm.text)
+        }else{
+          console.log('errorですよ')
+        }
       },
       resetForm(formName){
         this.$refs[formName].resetFields();
