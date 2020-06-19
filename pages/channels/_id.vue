@@ -21,11 +21,27 @@
 <script>
 import Todos from '~/components/Todos.vue'
 import AddTodo from '~/components/AddTodo.vue'
+import {db} from '~/plugins/firebase'
 
 export default {
   components: {
     AddTodo,
     Todos
+  },
+  data(){
+      return {
+          tasks: []
+      }
+  },
+  mounted(){
+      const channelId = this.$route.params.id
+      db.collection('channels').doc(channelId).collection('tasks').get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) =>{
+              this.tasks.push({id: doc.id, ...doc.data()})
+          })
+          console.log(this.tasks)
+      })
   }
 }
 </script>
