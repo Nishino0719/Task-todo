@@ -72,11 +72,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if(valid){
-            alert('submit!');
-            console.log(this.ruleForm.subject)
-            console.log(this.ruleForm.date1)
-            console.log(this.ruleForm.date2)
-            console.log(this.ruleForm.text)
+            // date1のformatを日付までにして、date2のformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
             const channelId = this.$route.params.id
             db.collection('channels').doc(channelId).collection('tasks').add({
               text: this.ruleForm.text,
@@ -89,7 +85,7 @@ export default {
           }
         });
       },
-      addTask() {
+      addTask(formName) {
         //   成功した時のみにしなきゃ
         if( this.ruleForm.subject !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== ''){
           this.$notify({
@@ -97,6 +93,10 @@ export default {
             message: 'タスクが新たに追加されました！',
             type: 'success'
           });
+            this.ruleForm.text = null
+            this.ruleForm.subject = null
+            this.ruleForm.date1 = null
+            this.ruleForm.date2 = null
         }else{
           console.log('errorですよ')
         }

@@ -43,7 +43,6 @@ export default {
         height: auto;
     }
     .todos-component{
-        padding-left:   10px;
         padding-bottom: 20px;
         display: inline-block;
         text-align: center;

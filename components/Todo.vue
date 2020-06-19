@@ -12,7 +12,7 @@
             <el-button slot="reference" icon="el-icon-close" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
         <h3>task.test</h3>
-        <h5 class="deadline">締め切り：{{task.deadline}}</h5>
+        <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5>
             <h4>
                 <span class="countdown">あと task.nowdate</span>
             </h4>
