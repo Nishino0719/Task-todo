@@ -4,19 +4,8 @@
                 <el-form-item label="タグ" required prop="tag">
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
                     <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag"></el-option>
-                    <!-- <el-option label="情報通信工学実験" value="情報通信工学実験"></el-option>
-                    <el-option label="アルゴリズム設計" value="アルゴリズム設計"></el-option>
-                    <el-option label="プログラム設計" value="プログラム設計"></el-option>
-                    <el-option label="科学技術の社会史" value="科学技術の社会史"></el-option>
-                    <el-option label="ゲーム理論" value="ゲーム理論"></el-option>
-                    <el-option label="確率統計" value="確率統計"></el-option>
-                    <el-option label="中国語" value="中国語"></el-option>
-                    <el-option label="論理設計" value="論理設計"></el-option>
-                    <el-option label="英語ⅤC" value="英語ⅤC"></el-option> -->
-                    <el-option label="タグを追加" value="タグ追加">
-                      <a href="">
-                        タグを追加
-                      </a>
+                    <el-option label="タグを追加" value="タグを追加">
+                      <el-button type="text" @click="openAddTag">タグを追加</el-button>
                     </el-option>
                     </el-select>
                 </el-form-item>
@@ -75,6 +64,26 @@ export default {
       };
     },
     methods: {
+      openAddTag() {
+        this.$prompt('自分だけのコンパクトなタグを作ろう！', 'タグの追加方法', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'info',
+          center: true,
+          // inputPattern:10文字以内とか制限つけたい
+          inputErrorMessage: 'そのタグは追加できません'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'タグが新たに追加されました！'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'キャンセルしました。'
+          });
+        });
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if(valid){
@@ -93,7 +102,7 @@ export default {
       },
       addTask(formName) {
         //   成功した時のみにしなきゃ
-        if( this.ruleForm.tag !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== ''){
+        if( this.ruleForm.tag !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== '' &&this.ruleForm.tag !== 'タグを追加'){
           this.$notify({
             title: '成功！',
             message: 'タスクが新たに追加されました！',
@@ -101,6 +110,9 @@ export default {
           });
         }else{
           console.log('errorですよ')
+          if(this.ruleForm.tag === 'タグを追加'){
+            alert('「タグを追加」はタグとして使うことができません。')
+          }
         }
       },
       resetForm(formName){
@@ -114,7 +126,6 @@ export default {
         querySnapshot.forEach((doc) =>{
           this.tags.push({id: doc.id, ...doc.data()})
         })
-        console.log(this.tags.id)
       })
     }
 }
@@ -124,7 +135,12 @@ export default {
   .add-todo_box{
     border: 0.4px solid rgba(41, 41, 41, .8);
     border-radius: 40px;
-    padding: 15px;
-    margin:15px 5vw;
+    padding: 10px;
+    /* margin:15px 5vw; */
+    margin: 10px 5px;
+  }
+
+  .add-tag_btn{
+    display: block;
   }
 </style>

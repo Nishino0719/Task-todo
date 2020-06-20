@@ -1,7 +1,8 @@
 <template>
   <div class="container">
       <div class="todos-title_container">
-          <h2>{channel.name}</h2>
+          <h2>{{channel.name}}</h2>
+          <h2>左のリンクから飛んでね</h2>
         <!-- <el-badge :value="12" class="item"  type="primary">
           <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
         </el-badge>
@@ -32,7 +33,7 @@ export default {
   data(){
       return {
           tasks: [],
-          channel: []
+          channel:[]
       }
   },
   mounted(){
@@ -46,8 +47,8 @@ export default {
       const docRef = db.collection('channels').doc(channelId)
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("ドキュメントでーた:", doc.data())
-            this.channel.push(doc.data().name)
+            console.log("ドキュメントでーた:", doc.data().name)
+            this.channel.push({id: doc.id, ...doc.data()})
             console.log('ohyes',this.channel)
            
         } else {
@@ -91,7 +92,7 @@ export default {
   }
 
   .add-todo_container{
-    height: 40vh;
+    min-height: 40vh;
   }
 
   .todo-side{
