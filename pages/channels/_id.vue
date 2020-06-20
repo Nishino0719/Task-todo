@@ -38,7 +38,7 @@ export default {
   },
   mounted(){
       const channelId = this.$route.params.id
-      db.collection('channels').doc(channelId).collection('tasks').onSnapshot((snapshot)=>{
+      db.collection('channels').doc(channelId).collection('tasks').orderBy('deadline').onSnapshot((snapshot)=>{
           snapshot.docChanges().forEach((change)=>{
               const doc = change.doc
               if(change.type === 'added'){
