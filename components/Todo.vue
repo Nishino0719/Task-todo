@@ -8,7 +8,7 @@
         <el-tag type="info">1週間後</el-tag> -->
         <!-- <el-tag type="success">まだ余裕</el-tag> -->
         <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button>
-        <el-popconfirm confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
+        <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-close" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
         <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5>
@@ -26,6 +26,7 @@
 <script>
 import AddTodo from '~/components/AddTodo.vue'
 import moment from 'moment'
+import {db} from '~/plugins/firebase'
 moment.locale('ja')
 var m = moment()
 var output = m.format('YYYY年MM月DD日 HH:mm:ss dddd')
@@ -64,6 +65,15 @@ console.log(output)
             }else{
                 this.type = ''
             }
+        },
+        deletetask(){
+            const channelId = this.$route.params.id
+            console.log('本当に削除してもいいんですね。ドキュメントID', this.task.id)
+            db.collection("channels").doc(channelId).collection('tasks').doc(this.task.id).delete().then(function() {
+            console.log("ドキュメントの削除をしました");
+            }).catch(function(error) {
+            console.error("ドキュメントの削除ができません: ", error);
+            });
         }
     },
   }
