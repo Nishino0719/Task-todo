@@ -64,25 +64,34 @@ export default {
       };
     },
     methods: {
-      openAddTag() {
+      openAddTag(event) {
         this.$prompt('自分だけのコンパクトなタグを作ろう！', 'タグの追加方法', {
           confirmButtonText: 'OK',
           cancelButtonText: 'Cancel',
           type: 'info',
           center: true,
+          showInput:true,
           // inputPattern:10文字以内とか制限つけたい
           inputErrorMessage: 'そのタグは追加できません'
-        }).then(() => {
+        }).then(({value}) => {
+          if (this.keyDownedForJPConversion(event)) { return }
+          const channelId = this.$route.params.id
+          db.collection('channels').doc(channelId).collection('tags').add({ tag: value })
           this.$message({
             type: 'success',
             message: 'タグが新たに追加されました！'
           });
+          console.log(value)
         }).catch(() => {
           this.$message({
             type: 'info',
             message: 'キャンセルしました。'
           });
         });
+      },
+      keyDownedForJPConversion(event){
+      const codeForConversion = 229
+      return event.keyCode === codeForConversion
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
