@@ -2,7 +2,7 @@
 <div class="todo-component">
     <div class="todo-container">
         <el-button v-model="checked" v-bind:type="type" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
-        <el-tag size="medium" type="danger" effect="plain">{{task.subject}}</el-tag>
+        <el-tag size="medium" type="danger" effect="plain">{{task.tag}}</el-tag>
         <el-tag type="danger">今日中</el-tag>
         <!-- <el-tag type="warning">三日後</el-tag>
         <el-tag type="info">1週間後</el-tag> -->
@@ -11,7 +11,6 @@
         <el-popconfirm confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-close" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
-        <h3>task.test</h3>
         <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5>
             <h4>
                 <span class="countdown">あと task.nowdate</span>

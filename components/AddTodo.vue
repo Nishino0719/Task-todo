@@ -1,9 +1,10 @@
 <template>
     <div class="add-todo_box">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
-                <el-form-item label="科目" required prop="subject">
-                    <el-select v-model="ruleForm.subject" placeholder="科目を選んでね！">
-                    <el-option label="情報通信工学実験" value="情報通信工学実験"></el-option>
+                <el-form-item label="タグ" required prop="tag">
+                    <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
+                    <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag"></el-option>
+                    <!-- <el-option label="情報通信工学実験" value="情報通信工学実験"></el-option>
                     <el-option label="アルゴリズム設計" value="アルゴリズム設計"></el-option>
                     <el-option label="プログラム設計" value="プログラム設計"></el-option>
                     <el-option label="科学技術の社会史" value="科学技術の社会史"></el-option>
@@ -11,7 +12,12 @@
                     <el-option label="確率統計" value="確率統計"></el-option>
                     <el-option label="中国語" value="中国語"></el-option>
                     <el-option label="論理設計" value="論理設計"></el-option>
-                    <el-option label="英語ⅤC" value="英語ⅤC"></el-option>
+                    <el-option label="英語ⅤC" value="英語ⅤC"></el-option> -->
+                    <el-option label="タグを追加" value="タグ追加">
+                      <a href="">
+                        タグを追加
+                      </a>
+                    </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="課題締め切り" required>
@@ -22,8 +28,9 @@
                     </el-col>
                     <el-col class="line" :span="1">ー</el-col>
                     <el-col :span="11">
-                    <el-form-item prop="date2">
-                        <el-time-picker placeholder="時間を選んでね！" v-model="ruleForm.date2" style="width: 100%;"></el-time-picker>
+                    <el-form-item prop="time">
+                        <!-- <el-time-picker placeholder="時間を選んでね！" v-model="ruleForm.time" style="width: 100%;"></el-time-picker> -->
+                          <el-time-select v-model="ruleForm.time" :picker-options="{ start: '0:00', step: '00:15', end: '23:45'}" placeholder="時間を選んでね！" style="width:100%;"></el-time-select>
                     </el-form-item>
                     </el-col>
                 </el-form-item>
@@ -34,7 +41,6 @@
                     <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
                     <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
                 </el-form-item>
-                {{nishino}}
             </el-form>
 
     </div>
@@ -45,22 +51,22 @@ import {db} from '~/plugins/firebase'
 export default {
     data(){
         return {
-            nishino:'hogehoge',
+            tags:[],
             ruleForm: {
-                subject: '',
+                tag: '',
                 date1: '',
-                date2: '',
+                time: '',
                 text:''          
             },
             rules: {
-                    subject: [
+                    tag: [
                     {required: true, message: '課題を選択してください！', trigger: 'change' }
                 ],
                     date1: [
                     { type: 'date', required: true, message: '日付を選んでください！', trigger: 'change' }
                 ],
-                    date2: [
-                    { type: 'date', required: true, message: '時間を選んでください！', trigger: 'change' }
+                    time: [
+                    {required: true, message: '時間を選んでください！', trigger: 'change' }
                 ],
                     text:  [
                     { required: false, message: '', trigger: 'blur' }
@@ -72,11 +78,11 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if(valid){
-            // date1のformatを日付までにして、date2のformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
+            // date1のformatを日付までにして、timeのformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
             const channelId = this.$route.params.id
             db.collection('channels').doc(channelId).collection('tasks').add({
               text: this.ruleForm.text,
-              subject: this.ruleForm.subject,
+              tag: this.ruleForm.tag,
               deadline: this.ruleForm.date1,
               done:false
             })
@@ -87,16 +93,12 @@ export default {
       },
       addTask(formName) {
         //   成功した時のみにしなきゃ
-        if( this.ruleForm.subject !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== ''){
+        if( this.ruleForm.tag !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== ''){
           this.$notify({
             title: '成功！',
             message: 'タスクが新たに追加されました！',
             type: 'success'
           });
-            this.ruleForm.text = null
-            this.ruleForm.subject = null
-            this.ruleForm.date1 = null
-            this.ruleForm.date2 = null
         }else{
           console.log('errorですよ')
         }
@@ -104,6 +106,16 @@ export default {
       resetForm(formName){
         this.$refs[formName].resetFields();
       }
+    },
+    mounted(){
+      const channelId = this.$route.params.id
+      db.collection('channels').doc(channelId).collection('tags').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) =>{
+          this.tags.push({id: doc.id, ...doc.data()})
+        })
+        console.log(this.tags.id)
+      })
     }
 }
 </script>
