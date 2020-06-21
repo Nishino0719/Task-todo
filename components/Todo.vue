@@ -1,8 +1,8 @@
 <template>
 <div class="todo-component">
-    <div class="todo-container">
+    <div class="todo-container done-yet">
         <el-button v-model="checked" v-bind:type="type" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
-        <el-tag size="medium" type="danger" effect="plain">{{task.tag}}</el-tag>
+        <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
         <el-tag type="danger">今日中</el-tag>
         <!-- <el-tag type="warning">三日後</el-tag>
         <el-tag type="info">1週間後</el-tag> -->
@@ -94,10 +94,20 @@ console.log(output)
     width: 270px;
     height: auto;
     position: relative;
+}
+.done-yet{
     background: linear-gradient(145deg, #e6e6e6, #ffffff);
     box-shadow:  11px 11px 22px #757575, 
                 -11px -11px 22px #ffffff;
-    
+}
+
+.done{
+    /* background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:  11px 11px 22px #757575, 
+                -11px -11px 22px #ffffff; */
+    background: linear-gradient(145deg, #c3f4f7, #a4cdd0);
+    box-shadow:  11px 11px 22px #54696a, 
+                -11px -11px 22px #ffffff;
 }
 
 .PartyParrot{

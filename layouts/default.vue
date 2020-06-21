@@ -118,7 +118,8 @@ html {
 .footer-container{
   text-align: center;
   position: fixed;
-  height: 10vh;
+  /* height: 25vh; */
+  height: 100%;
   width: 100%;
   background-color: #2d3e50;
   color: #fafafa;

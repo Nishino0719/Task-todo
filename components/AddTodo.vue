@@ -112,6 +112,7 @@ export default {
               text: this.ruleForm.text,
               tag: this.ruleForm.tag,
               deadline: this.ruleForm.date1,
+              level:1,
               done:false
             })
             this.drawer = false

@@ -94,7 +94,7 @@ export default {
   }
 
   .add-todo_container{
-    min-height: 10vh;
+    min-height: 30vh;
   }
 
   .todo-side{

@@ -2,20 +2,21 @@
     <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
         <div class="limit-today">
-           <Todo v-bind:key="task.key" v-for="task in tasks" :task="task"/>
+            <!-- v-ifとv-forの併用はできないのでやり方は後で考える -->
+           <Todo  v-if="task.level === 4" v-bind:key="task.key" v-for="task in tasks" :task="task"/>
         </div>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
         <div class="limit-3days_after">
-          <!-- <Todo v-bind:key="task" v-for="task in tasks" :task="task"/> -->
+          <Todo  v-if="task.level === 3" v-bind:key="task" v-for="task in tasks" :task="task"/>
         </div>
         <el-tag type="info" class="limit-tag">締め切り1週間以内</el-tag>
         <div class="limit-1week_after">
-            <!-- <Todo v-bind:key="task" v-for="task in tasks" :task="task"/> -->
+            <Todo  v-if="task.level === 2" v-bind:key="task" v-for="task in tasks" :task="task"/>
 
         </div>
         <el-tag type="success" class="limit-tag">まだまだ余裕!</el-tag>
         <div class="limit-more_than">
-            <!-- <Todo v-bind:key="task" v-for="task in tasks" :task="task"/> -->
+            <Todo  v-if="task.level === 1" v-bind:key="task" v-for="task in tasks" :task="task"/>
             
         </div>
     </div>
