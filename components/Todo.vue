@@ -7,9 +7,10 @@
         <!-- <el-tag type="warning">三日後</el-tag>
         <el-tag type="info">1週間後</el-tag> -->
         <!-- <el-tag type="success">まだ余裕</el-tag> -->
-        <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button>
+        <!-- <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button> -->
+        <el-link icon="el-icon-edit edit"></el-link>
         <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
-            <el-button slot="reference" icon="el-icon-close" circle size="mini" type="danger"></el-button>
+            <el-button slot="reference" icon="el-icon-delete" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
         <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5>
             <h4>
@@ -18,7 +19,7 @@
             <p class="detail">
                 未来の自分へ：{{task.text}}
             </p>
-        <img src="https://www.theexpatfairs.com/wp-content/uploads/2019/07/just-do-it-gif-transparent-1.gif" class="PartyParrot">
+        <!-- <img src="https://www.theexpatfairs.com/wp-content/uploads/2019/07/just-do-it-gif-transparent-1.gif" class="PartyParrot"> -->
     </div>
 </div>
 </template>

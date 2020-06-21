@@ -2,7 +2,7 @@
   <div class="container">
       <div class="todos-title_container">
           <h2>{{channel.name}}</h2>
-          <h2>左のリンクから飛んでね</h2>
+          <h2>ｱﾊﾊﾊﾊ</h2>
         <!-- <el-badge :value="12" class="item"  type="primary">
           <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
         </el-badge>

@@ -20,10 +20,14 @@
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="2">
+              <i class="el-icon-user"></i>
+              <span slot="title">ユーザー設定</span>
+          </el-menu-item>
+          <el-menu-item index="3">
               <i class="el-icon-question"></i>
               <span slot="title">使い方</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">設定</span>
           </el-menu-item>

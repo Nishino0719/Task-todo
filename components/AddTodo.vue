@@ -1,11 +1,20 @@
 <template>
     <div class="add-todo_box">
+            <el-button type="primary" @click="drawer = true">タスクを追加する形にする</el-button>
+            <el-drawer
+              title="タスクを追加する"
+              :visible.sync="drawer"
+              direction="btt"
+              size="57%"
+            >
+              <div class="add-task__content">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
                 <el-form-item label="タグ" required prop="tag">
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
-                    <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag"></el-option>
+                    <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
+                    </el-option>
                     <el-option label="タグを追加" value="タグを追加">
-                      <el-button type="text" @click="openAddTag">タグを追加</el-button>
+                      <el-button type="text" @click="openAddTag" class="add-tag_btn">タグを追加</el-button>
                     </el-option>
                     </el-select>
                 </el-form-item>
@@ -18,7 +27,6 @@
                     <el-col class="line" :span="1">ー</el-col>
                     <el-col :span="11">
                     <el-form-item prop="time">
-                        <!-- <el-time-picker placeholder="時間を選んでね！" v-model="ruleForm.time" style="width: 100%;"></el-time-picker> -->
                           <el-time-select v-model="ruleForm.time" :picker-options="{ start: '0:00', step: '00:15', end: '23:45'}" placeholder="時間を選んでね！" style="width:100%;"></el-time-select>
                     </el-form-item>
                     </el-col>
@@ -26,11 +34,13 @@
                 <el-form-item label="未来の自分へ" prop="text">
                     <el-input type="textarea" v-model="ruleForm.text"></el-input>
                 </el-form-item>
-                <el-form-item size="large">
-                    <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
-                    <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
+                <el-form-item>
+                <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
+                <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
                 </el-form-item>
             </el-form>
+            </div>
+          </el-drawer>
 
     </div>
 </template>
@@ -40,6 +50,7 @@ import {db} from '~/plugins/firebase'
 export default {
     data(){
         return {
+            drawer:false,
             tags:[],
             ruleForm: {
                 tag: '',
@@ -104,10 +115,14 @@ export default {
               deadline: this.ruleForm.date1,
               done:false
             })
+            this.drawer = false
           }else{
             return false;
           }
         });
+      },
+      resetForm(formName){
+        this.$refs[formName].resetFields();
       },
       addTask(formName) {
         //   成功した時のみにしなきゃ
@@ -124,9 +139,6 @@ export default {
           }
         }
       },
-      resetForm(formName){
-        this.$refs[formName].resetFields();
-      }
     },
     mounted(){
       const channelId = this.$route.params.id
