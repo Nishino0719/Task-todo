@@ -3,10 +3,10 @@
     <div class="todo-container done-yet">
         <el-button v-model="checked" v-bind:type="type" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
         <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
-        <el-tag type="danger">今日中</el-tag>
-        <!-- <el-tag type="warning">三日後</el-tag>
-        <el-tag type="info">1週間後</el-tag> -->
-        <!-- <el-tag type="success">まだ余裕</el-tag> -->
+        <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
+        <el-tag type="warning" v-if="task.level === 3">三日後</el-tag>
+        <el-tag type="info" v-if="task.level === 2">1週間後</el-tag>
+        <el-tag type="success" v-if="task.level === 1">まだ余裕</el-tag>
         <!-- <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button> -->
         <el-link icon="el-icon-edit edit"></el-link>
         <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
