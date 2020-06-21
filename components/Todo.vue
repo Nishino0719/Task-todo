@@ -87,13 +87,17 @@ console.log(output)
 }
 
 .todo-container{
-    margin: 10px 10px;
+    margin: 20px 20px;
     border: 0.1px solid rgba(41, 41, 41, .2);
     border-radius: 15px;
-    padding: 10px;
+    padding: 20px;
     width: 270px;
     height: auto;
     position: relative;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    box-shadow:  11px 11px 22px #757575, 
+                -11px -11px 22px #ffffff;
+    
 }
 
 .PartyParrot{

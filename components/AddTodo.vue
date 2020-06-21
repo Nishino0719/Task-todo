@@ -1,15 +1,16 @@
 <template>
     <div class="add-todo_box">
-            <el-button type="primary" @click="drawer = true">タスクを追加する形にする</el-button>
+            <el-button type="primary" @click="drawer = true" class="el-icon-plus" circle></el-button>
             <el-drawer
               title="タスクを追加する"
               :visible.sync="drawer"
               direction="btt"
               size="57%"
+              :with-header="false"
             >
               <div class="add-task__content">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
-                <el-form-item label="タグ" required prop="tag">
+                <el-form-item label="タグ" required prop="tag"  style="padding-top:30px">
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
                     <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
                     </el-option>
@@ -34,11 +35,9 @@
                 <el-form-item label="未来の自分へ" prop="text">
                     <el-input type="textarea" v-model="ruleForm.text"></el-input>
                 </el-form-item>
-                <el-form-item>
+            </el-form>
                 <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
                 <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
-                </el-form-item>
-            </el-form>
             </div>
           </el-drawer>
 
@@ -156,11 +155,10 @@ export default {
 
 <style>
   .add-todo_box{
-    border: 0.4px solid rgba(41, 41, 41, .8);
     border-radius: 40px;
     padding: 10px;
-    /* margin:15px 5vw; */
     margin: 10px 5px;
+    text-align: center;
   }
 
   .add-tag_btn{

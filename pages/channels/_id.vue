@@ -88,13 +88,13 @@ export default {
   }
 
   .todos-container{
-    height: 40vh;
+    height: 70vh;
     overflow-x: hidden;
     overflow-y: scroll;
   }
 
   .add-todo_container{
-    min-height: 40vh;
+    min-height: 10vh;
   }
 
   .todo-side{
