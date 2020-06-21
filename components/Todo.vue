@@ -1,6 +1,6 @@
 <template>
 <div class="todo-component">
-    <div class="todo-container done-yet">
+    <div class="todo-container done-yet" v-bind:class="{done:isDone}">
         <el-button v-model="checked" v-bind:type="type" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
         <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
         <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
@@ -41,6 +41,7 @@ console.log(output)
         return{
             type:'',
             checked: true,
+            isDone:false
             // task:{
             //     subject:'情報通信工学実験',
             //     deadline: '2020/06/14',
@@ -60,11 +61,13 @@ console.log(output)
             if(this.type == ''){
                 this.type = 'success'
                 this.$message({
-                 message: 'タスク完了！よくやった！お疲れ様！！！',
+                    message: 'タスク完了！よくやった！お疲れ様！！！',
                  type: 'success'
                 });
+                this.isDone = true
             }else{
                 this.type = ''
+                this.isDone = false
             }
         },
         deletetask(){
