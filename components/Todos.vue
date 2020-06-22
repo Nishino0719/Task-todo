@@ -22,7 +22,7 @@
     </div>
 </template>
 
-<script>
+<script>  
 import Todo from '~/components/Todo.vue'
 import {db} from '~/plugins/firebase'
 export default {

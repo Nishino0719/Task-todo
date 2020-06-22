@@ -1,7 +1,8 @@
 <template>
 <div class="todo-component">
-    <div class="todo-container done-yet" v-bind:class="{done:isDone}">
-        <el-button v-model="checked" v-bind:type="type" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
+    <div class="todo-container done-yet" v-bind:class="{done:task.done}">
+            <el-button  v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
+            <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
         <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
         <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
         <el-tag type="warning" v-if="task.level === 3">三日後</el-tag>
@@ -39,7 +40,7 @@ console.log(output)
     props:['task'],
     data(){
         return{
-            type:'',
+            // type:'success',
             checked: true,
             isDone:false
             // task:{
@@ -58,28 +59,44 @@ console.log(output)
     },
     methods:{
         done: function(){
-            if(this.type == ''){
-                this.type = 'success'
+            if(this.task.done === false){
+                // this.type = 'success'
                 this.$message({
                     message: 'タスク完了！よくやった！お疲れ様！！！',
-                 type: 'success'
+                    type: 'success'
                 });
                 this.isDone = true
+                const channelId = this.$route.params.id
+                const taskId = this.task.id
+                    console.log(this.task.done)
+                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                    done:true
+                })
+                alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
             }else{
-                this.type = ''
+                // this.type = ''
                 this.isDone = false
+                const channelId = this.$route.params.id
+                const taskId = this.task.id
+                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                    done:false
+                })
             }
         },
         deletetask(){
             const channelId = this.$route.params.id
+            const taskId = this.task.id
             console.log('本当に削除してもいいんですね。ドキュメントID', this.task.id)
-            db.collection("channels").doc(channelId).collection('tasks').doc(this.task.id).delete().then(function() {
+            db.collection("channels").doc(channelId).collection('tasks').doc(taskId).delete().then(function() {
             console.log("ドキュメントの削除をしました");
             }).catch(function(error) {
             console.error("ドキュメントの削除ができません: ", error);
             });
         }
     },
+    computed:{
+
+    }
   }
 </script>
 
