@@ -1,5 +1,4 @@
 <template>
-<div class="todo-component">
     <div class="todo-container done-yet" v-bind:class="{done:task.done}">
             <el-button  v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
             <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
@@ -22,7 +21,6 @@
             </p>
         <!-- <img src="https://www.theexpatfairs.com/wp-content/uploads/2019/07/just-do-it-gif-transparent-1.gif" class="PartyParrot"> -->
     </div>
-</div>
 </template>
 
 <script>
@@ -72,7 +70,7 @@ console.log(output)
                 db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
                     done:true
                 })
-                alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
+                // alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
             }else{
                 // this.type = ''
                 this.isDone = false
@@ -101,11 +99,6 @@ console.log(output)
 </script>
 
 <style>
-.todo-component{
-    display: inline-block;
-    margin-bottom: 20px;
-}
-
 .todo-container{
     margin: 20px 20px;
     border: 0.1px solid rgba(41, 41, 41, .2);
@@ -122,12 +115,10 @@ console.log(output)
 }
 
 .done{
-    /* background: linear-gradient(145deg, #ffffff, #e6e6e6);
-    box-shadow:  11px 11px 22px #757575, 
-                -11px -11px 22px #ffffff; */
-    background: linear-gradient(145deg, #c3f4f7, #a4cdd0);
-    box-shadow:  11px 11px 22px #54696a, 
-                -11px -11px 22px #ffffff;
+    background: #b6e4e7;
+    box-shadow: inset 5px 5px 10px #495b5c, 
+                inset -5px -5px 10px #ffffff;
+    transition: 2ms;
 }
 
 .PartyParrot{

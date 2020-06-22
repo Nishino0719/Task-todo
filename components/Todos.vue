@@ -1,24 +1,26 @@
 <template>
     <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
-        <div class="limit-today">
+        <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
             <!-- v-ifとv-forの併用はできないのでやり方は後で考える -->
-           <Todo  v-if="task.level === 4" v-bind:key="task.key" v-for="task in tasks" :task="task"/>
+           <Todo v-if="task.level === 4" :task="task"/>
         </div>
+        <br>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
-        <div class="limit-3days_after">
-          <Todo  v-if="task.level === 3" v-bind:key="task" v-for="task in tasks" :task="task"/>
+        <div class="todo-component"  v-bind:key="task.key" v-for="task in tasks">
+          <Todo v-if="task.level === 3" :task="task"/>
         </div>
+        <br>
         <el-tag type="info" class="limit-tag">締め切り1週間以内</el-tag>
-        <div class="limit-1week_after">
-            <Todo  v-if="task.level === 2" v-bind:key="task" v-for="task in tasks" :task="task"/>
-
-        </div>
+            <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
+                <Todo  v-if="task.level === 2" :task="task"/>
+            </div>
+        <br>
         <el-tag type="success" class="limit-tag">まだまだ余裕!</el-tag>
-        <div class="limit-more_than">
-            <Todo  v-if="task.level === 1" v-bind:key="task" v-for="task in tasks" :task="task"/>
-            
+        <div class="todo-component" v-bind:key="task.key"  v-for="task in tasks" >
+            <Todo v-if="task.level === 1" :task="task"/>            
         </div>
+        <br>
     </div>
 </template>
 
@@ -41,15 +43,21 @@ export default {
      .limit-tag{
         font-size: 12px;
         border-radius: 10px;
-        padding: 6px;
-        margin: 5px;
+        padding: 4px;
+        margin-left: auto;
+        margin-right: auto;
         height: auto;
+        width: 10em;
+        display: block;
     }
     .todos-component{
         padding-bottom: 20px;
-        display: inline-block;
         text-align: center;
         width: 100%;
+    }
+    .todo-component{
+        display: inline-block;
+        margin-bottom: 0px;
     }
 
 </style>
