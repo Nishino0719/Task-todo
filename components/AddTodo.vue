@@ -108,13 +108,15 @@ export default {
           if(valid){
             // date1のformatを日付までにして、timeのformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
             const channelId = this.$route.params.id
-            db.collection('channels').doc(channelId).collection('tasks').add({
-              text: this.ruleForm.text,
-              tag: this.ruleForm.tag,
-              deadline: this.ruleForm.date1,
-              level:1,
-              done:false
-            })
+            if(this.ruleForm.tag !== 'タグを追加'){
+              db.collection('channels').doc(channelId).collection('tasks').add({
+                text: this.ruleForm.text,
+                tag: this.ruleForm.tag,
+                deadline: this.ruleForm.date1,
+                level:1,
+                done:false
+              })
+            }
             this.drawer = false
           }else{
             return false;
