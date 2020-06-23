@@ -2,7 +2,7 @@
     <div class="todo-container done-yet" v-bind:class="{done:task.done}">
             <el-button  v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
             <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
-        <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
+        <el-tag size="medium" type="primary" effect="plain" v-bind:style="task.color">{{task.tag}}</el-tag>
         <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
         <el-tag type="warning" v-if="task.level === 3">三日後</el-tag>
         <el-tag type="info" v-if="task.level === 2">1週間後</el-tag>

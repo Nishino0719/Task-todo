@@ -41,12 +41,21 @@ export default {
       db.collection('channels').doc(channelId).collection('tasks').orderBy('deadline').onSnapshot((snapshot)=>{
           snapshot.docChanges().forEach((change)=>{
               const doc = change.doc
-              const index = change.oldIndex
+              const oldIndex = change.oldIndex
+              const newIndex = change.newIndex
               if(change.type === 'added'){
                    this.tasks.push({id: doc.id, ...doc.data()})
               }if(change.type === 'modified'){
+                    // this.tasks.push({id: doc.id, ...doc.data()})
+                    // this.tasks.splice(index,1)
+                    console.log(this.tasks)
+                    console.log(change.doc)
+                    console.log(change)
+                    this.tasks.splice(oldIndex,1)
+                    this.tasks.splice(newIndex, 0, doc.data())
+                    // this.tasks.splice(oldIndex,1)
               }if(change.type === 'removed'){
-                    this.tasks.splice(index,1)
+                    this.tasks.splice(oldindex,1)
               }
           })
       })

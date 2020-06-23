@@ -15,7 +15,21 @@
                     <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
                     </el-option>
                     <el-option label="タグを追加" value="タグを追加">
-                      <el-button type="text" @click="openAddTag" class="add-tag_btn">タグを追加</el-button>
+                      <el-popover
+                        placement="top"
+                        width="300"
+                        trigger="click"
+                         v-model="visible" class="add-tag_popover">
+                        <el-form :model="tagForm">
+                          <el-form-item label="">
+                            <el-color-picker v-model="tagForm.color" size="small"></el-color-picker>
+                            <el-input v-model="tagForm.tag" autocomplete="off"></el-input>
+                          </el-form-item>
+                        </el-form>
+                        <el-button slot="reference">タグを追加</el-button>
+                        <el-button  @click="visible = false">キャンセル</el-button>
+                          <el-button type="primary" @click="visible = false,submitTagForm('tagForm')">追加</el-button>
+                      </el-popover>
                     </el-option>
                     </el-select>
                 </el-form-item>
@@ -49,6 +63,7 @@ import {db} from '~/plugins/firebase'
 export default {
     data(){
         return {
+            visible:false,
             drawer:false,
             tags:[],
             ruleForm: {
@@ -57,6 +72,10 @@ export default {
                 time: '',
                 text:''          
             },
+            tagForm: {
+              color:'#409EFF',
+              tag: '',
+            }, 
             rules: {
                     tag: [
                     {required: true, message: '課題を選択してください！', trigger: 'change' }
@@ -74,34 +93,37 @@ export default {
       };
     },
     methods: {
-      openAddTag(event) {
-        this.$prompt('自分だけのコンパクトなタグを作ろう！', 'タグの追加方法', {
-          confirmButtonText: 'OK',
-          cancelButtonText: 'Cancel',
-          type: 'info',
-          center: true,
-          showInput:true,
-          // inputPattern:10文字以内とか制限つけたい
-          inputErrorMessage: 'そのタグは追加できません'
-        }).then(({value}) => {
-          if (this.keyDownedForJPConversion(event)) { return }
+      // openAddTag(event) {
+      //   this.$prompt('自分だけのコンパクトなタグを作ろう！', 'タグの追加方法', {
+      //     confirmButtonText: 'OK',
+      //     cancelButtonText: 'Cancel',
+      //     type: 'info',
+      //     center: true,
+      //     showInput:true,
+      //     // inputPattern:10文字以内とか制限つけたい
+      //     inputErrorMessage: 'そのタグは追加できません'
+      //   }).then(({value,event}) => {
+      //     if(event.keyCode === 13){
+      //       const channelId = this.$route.params.id
+      //       db.collection('channels').doc(channelId).collection('tags').add({ tag: value })
+      //       this.$message({
+      //         type: 'success',
+      //         message: 'タグが新たに追加されました！'
+      //       });
+      //       console.log(value)
+      //     }
+      //   })
+      // },
+      submitTagForm(tagForm){
+        if(this.tagForm.tag !== '' && this.tagForm.color !== ''){
           const channelId = this.$route.params.id
-          db.collection('channels').doc(channelId).collection('tags').add({ tag: value })
-          this.$message({
-            type: 'success',
-            message: 'タグが新たに追加されました！'
-          });
-          console.log(value)
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'キャンセルしました。'
-          });
-        });
-      },
-      keyDownedForJPConversion(event){
-      const codeForConversion = 229
-      return event.keyCode === codeForConversion
+          // console.log(this.tagForm.tag)
+          // console.log(this.tagForm.color)
+          db.collection('channels').doc(channelId).collection('tags').add({
+             tag: this.tagForm.tag,
+             color:'color:'+ this.tagForm.color
+             })
+        }
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -162,6 +184,8 @@ export default {
     box-shadow:  5px 5px 11px #73adc7, 
                 -5px -5px 11px #93ddfd;
   } */
+  .add-tag_popover{
+  }
   .add-todo_box{
     border-radius: 40px;
     padding: 10px;
