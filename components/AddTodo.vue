@@ -28,7 +28,7 @@
                     <el-col class="line" :span="1">ー</el-col>
                     <el-col :span="11">
                     <el-form-item prop="time">
-                          <el-time-select v-model="ruleForm.time" :picker-options="{ start: '0:00', step: '00:15', end: '23:45'}" placeholder="時間を選んでね！" style="width:100%;"></el-time-select>
+                          <el-time-select v-model="ruleForm.time" :picker-options="{ start: '0:00', step: '00:15', end: '24:00'}" placeholder="時間を選んでね！" style="width:100%;"></el-time-select>
                     </el-form-item>
                     </el-col>
                 </el-form-item>
@@ -114,7 +114,7 @@ export default {
                 tag: this.ruleForm.tag,
                 deadline: this.ruleForm.date1,
                 level:1,
-                done:false
+                done:false,
               })
             }
             this.drawer = false
@@ -157,6 +157,11 @@ export default {
 </script>
 
 <style>
+  /* .el-icon-plus{
+    background: #83c5e2;
+    box-shadow:  5px 5px 11px #73adc7, 
+                -5px -5px 11px #93ddfd;
+  } */
   .add-todo_box{
     border-radius: 40px;
     padding: 10px;

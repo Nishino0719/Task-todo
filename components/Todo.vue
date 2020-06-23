@@ -12,9 +12,10 @@
         <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-delete" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
-        <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5>
+        <!-- <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5> -->
+        <h5 class="deadline">締め切り：2020/06/22 24:00</h5>
             <h4>
-                <span class="countdown">あと task.nowdate</span>
+                <span class="countdown">あと 8時間43分24秒{{task.numberinfo}}</span>
             </h4>
             <p class="detail">
                 未来の自分へ：{{task.text}}
@@ -85,10 +86,11 @@ console.log(output)
             const channelId = this.$route.params.id
             const taskId = this.task.id
             console.log('本当に削除してもいいんですね。ドキュメントID', this.task.id)
-            db.collection("channels").doc(channelId).collection('tasks').doc(taskId).delete().then(function() {
-            console.log("ドキュメントの削除をしました");
+            // this.task.splice(index, 1);
+            db.collection("channels").doc(channelId).collection('tasks').doc(taskId).delete().then(function(){
+            console.log("ドキュメントの削除をしました")
             }).catch(function(error) {
-            console.error("ドキュメントの削除ができません: ", error);
+            console.error("ドキュメントの削除ができません: ", error)
             });
         }
     },
@@ -101,7 +103,7 @@ console.log(output)
 <style>
 .todo-container{
     margin: 20px 20px;
-    border: 0.1px solid rgba(41, 41, 41, .2);
+    /* border: 0.1px solid rgba(41, 41, 41, .2); */
     border-radius: 15px;
     padding: 20px;
     width: 270px;
@@ -109,16 +111,23 @@ console.log(output)
     position: relative;
 }
 .done-yet{
-    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    /* ニューモーフィズムデザインでやってみる */
+    /* background: linear-gradient(145deg, #e6e6e6, #ffffff);
     box-shadow:  11px 11px 22px #757575, 
-                -11px -11px 22px #ffffff;
+                -11px -11px 22px #ffffff; */
+              background: #d0d0d0;
+box-shadow:  5px 5px 4px #949494, 
+             -5px -5px 4px #ffffff;
 }
 
 .done{
+    /* ニューモーフィズムデザインでやってみる */
     background: #b6e4e7;
     box-shadow: inset 5px 5px 10px #495b5c, 
                 inset -5px -5px 10px #ffffff;
-    transition: 2ms;
+                /* background: #d0d0d0;
+box-shadow: inset 5px 5px 4px #949494, 
+            inset -5px -5px 4px #ffffff; */
 }
 
 .PartyParrot{
