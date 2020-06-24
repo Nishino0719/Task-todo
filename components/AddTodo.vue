@@ -171,8 +171,8 @@ export default {
         this.$refs[formName].validate((valid) => {
           if(valid){
             // date1のformatを日付までにして、timeのformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
-                const  start_time = moment("0:00", 'HH:mm')
-                const  end_time = moment(this.ruleForm.time, 'HH:mm')
+                const start_time = moment("0:00", 'HH:mm')
+                const end_time = moment(this.ruleForm.time, 'HH:mm')
                 const deadlineSecond = moment(this.ruleForm.date1).startOf('day').unix() + end_time.diff(start_time)/1000
                 const date = new Date() ;
                 const milli = date.getTime()

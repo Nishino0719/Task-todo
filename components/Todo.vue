@@ -1,5 +1,5 @@
 <template>
-    <div class="todo-container done-yet" v-bind:class="{done:task.done}">
+    <div class="todo-container done-yet" v-bind:class="{done:task.done,dead:dead}">
         <el-popconfirm  @onConfirm="done" cancelButtonText='いや...' confirmButtonText='終わった!' icon="el-icon-loading" iconColor="" title="このタスク終わった！？">
             <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
         </el-popconfirm>
@@ -18,7 +18,25 @@
         <!-- <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5> -->
         <h5 class="deadline">締め切り：{{displayDeadline}}</h5>
             <h4>
-                <span class="countdown">あと 8時間43分24秒{{task.numberinfo}}</span>
+                <!-- <span class="countdown">あと {{countDown}}</span> -->
+                    <ul class="countdown">
+                        <li v-if="days > 0">
+                            <p class="digit">{{ days }}日</p>
+                            <!-- <p class="text">{{ days > 1 ? '日' : '日' }}</p> -->
+                        </li>
+                        <li>
+                            <p class="digit">{{ hours }}時間</p>
+                            <!-- <p class="text">{{ hours > 1 ? '時間' : '時間' }}</p> -->
+                        </li>
+                        <li>
+                            <p class="digit">{{ minutes }}分</p>
+                            <!-- <p class="text">分</p> -->
+                        </li>
+                        <li>
+                            <p class="digit">{{ seconds }}秒</p>
+                            <!-- <p class="text">秒</p> -->
+                        </li>
+                    </ul>
             </h4>
             <p class="detail">
                 未来の自分へ：{{task.text}}
@@ -33,21 +51,24 @@ import EditTodo from '~/components/EditTodo.vue'
 import moment from 'moment'
 import {db} from '~/plugins/firebase'
 moment.locale('ja')
-var m = moment()
-var output = m.format('YYYY年MM月DD日 HH:mm:ss dddd')
-console.log(output)
+let interval = null;
   export default {
     components:{
         AddTodo,
-        EditTodo
+        EditTodo,
     },
     props:['task'],
     data(){
         return{
+            now: Math.trunc((new Date()).getTime() / 1000),
+            date: null,
+            diff: 0,
             // type:'success',
             checked: true,
-            isDone:false,
+            dead:false,
+            canDone:true,
             displayDeadline:moment(this.task.deadline*1000).format('YYYY/MM/DD/ HH:mm'),
+            countDown:moment(this.task.deadline*1000).format('YYYY/MM/DD/ HH:mm'),
             // task:{
             //     subject:'情報通信工学実験',
             //     deadline: '2020/06/14',
@@ -61,6 +82,43 @@ console.log(output)
             //     }
             // }
         }
+    },
+    created(){
+        this.date = this.task.deadline
+        interval = setInterval(() => {
+            this.now = Math.trunc((new Date()).getTime() / 1000);
+        }, 1000);
+    },
+    computed :{
+        seconds() {
+            return Math.trunc(this.diff) % 60
+        },
+        minutes() {
+            return Math.trunc(this.diff / 60) % 60
+        },
+        hours() {
+            return Math.trunc(this.diff / 60 / 60) % 24
+        },
+        days() {
+            return Math.trunc(this.diff / 60 / 60 / 24)
+        }
+    },
+    watch:{
+        now(value) {
+            this.diff = this.date - this.now;
+            if(this.diff <= 0){
+                this.diff = 0;
+                // Remove interval
+                // 提出切れフェーズに移る。
+                clearInterval(interval);
+                if(this.task.done === false){
+                    this.dead = true
+                }
+            }
+        }
+    },
+    destroyed() {
+        clearInterval(interval);
     },
     methods:{
         done: function(){
@@ -102,10 +160,6 @@ console.log(output)
             });
         }
     },
-    mounted(){
-        console.log(this.channel)
-        // this.displayDeadline = moment(task.deadline, 'YYYY年MM月DD日 HH:mm')
-    }
   }
 </script>
 
@@ -134,9 +188,15 @@ box-shadow:  5px 5px 4px #949494,
     background: #b6e4e7;
     box-shadow: inset 5px 5px 10px #495b5c, 
                 inset -5px -5px 10px #ffffff;
-                /* background: #d0d0d0;
-box-shadow: inset 5px 5px 4px #949494, 
-            inset -5px -5px 4px #ffffff; */
+              /* background: #d0d0d0;
+box-shadow: inset 5px 5px 7px #535353, 
+            inset -5px -5px 7px #ffffff; */
+}
+
+.dead{
+background: linear-gradient(145deg, #c34b47, #e85955);
+box-shadow:  5px 5px 7px #572120, 
+             -5px -5px 7px #ff857e;
 }
 
 .PartyParrot{
@@ -157,7 +217,6 @@ box-shadow: inset 5px 5px 4px #949494,
     right: -9px;
 }
 
-
 p{
     text-align: center;
     margin: 0;
@@ -167,6 +226,18 @@ h5{
     color: #a5a5a5;
 }
 
+.countdown li{
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    text-decoration: none;
+}
+
+.countdown li:after{
+    position: absolute;
+    right: -13px;
+    font-size: 16px;
+}
 
 .detail{
     height: 50px;
