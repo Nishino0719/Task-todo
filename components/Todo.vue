@@ -68,9 +68,13 @@ console.log(output)
                 const channelId = this.$route.params.id
                 const taskId = this.task.id
                     console.log(this.task.done)
+                    console.log(channelId)
+                    console.log(taskId)
                 db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
                     done:true
                 })
+                    console.log('あと',channelId)
+                    console.log('あと',taskId)
                 // alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
             }else{
                 // this.type = ''

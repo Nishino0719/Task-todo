@@ -14,16 +14,17 @@
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
                     <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
                     </el-option>
-                    <el-option label="タグを追加" value="タグを追加">
+                    <el-option label="タグを追加" value="タグを追加" class="add-tag_popover">
                       <el-popover
                         placement="top"
-                        width="300"
+                        width="235"
                         trigger="click"
-                         v-model="visible" class="add-tag_popover">
+                         v-model="visible" class="">
                         <el-form :model="tagForm">
                           <el-form-item label="">
                             <el-color-picker v-model="tagForm.color" size="small"></el-color-picker>
                             <el-input v-model="tagForm.tag" autocomplete="off"></el-input>
+                            <h5>あと {{9 - this.tagForm.tag.length}}文字</h5>
                           </el-form-item>
                         </el-form>
                         <el-button slot="reference">タグを追加</el-button>
@@ -115,14 +116,40 @@ export default {
       //   })
       // },
       submitTagForm(tagForm){
-        if(this.tagForm.tag !== '' && this.tagForm.color !== ''){
+        if(this.tagForm.tag !== '' && this.tagForm.color !== '' && this.tagForm.tag.length < 10){
           const channelId = this.$route.params.id
           // console.log(this.tagForm.tag)
           // console.log(this.tagForm.color)
+            console.log(this.tagForm.tag.length)
           db.collection('channels').doc(channelId).collection('tags').add({
              tag: this.tagForm.tag,
              color:'color:'+ this.tagForm.color
              })
+              this.$message({
+                type: 'success',
+                message: 'タグが新たに追加されました！'
+              });
+              this.ruleForm.tag = this.tagForm.tag
+              this.tagForm.tag = ''
+        }else if(this.tagForm.tag.length > 9){
+                this.$message({
+                type: 'warning',
+                message: 'ごめんなさい！タグは9文字以内でお願いします！'
+              });
+              this.tagForm.tag = ''
+              this.ruleForm.tag = ''
+        }else if(this.tagForm.tag == ''){
+              this.$message({
+                type: 'warning',
+                message: 'タグを入力してね！'
+              });
+              this.ruleForm.tag = ''
+        }else if(this.tagForm.color == ''){
+              this.$message({
+                type: 'warning',
+                message: '色を入力してね！'
+              });
+              this.ruleForm.tag = ''
         }
       },
       submitForm(formName) {
@@ -185,6 +212,7 @@ export default {
                 -5px -5px 11px #93ddfd;
   } */
   .add-tag_popover{
+    
   }
   .add-todo_box{
     border-radius: 40px;
