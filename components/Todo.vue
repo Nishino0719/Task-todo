@@ -16,7 +16,7 @@
             <el-button slot="reference" icon="el-icon-delete" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
         <!-- <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5> -->
-        <h5 class="deadline">締め切り：2020/06/22 24:00</h5>
+        <h5 class="deadline">締め切り：{{displayDeadline}}</h5>
             <h4>
                 <span class="countdown">あと 8時間43分24秒{{task.numberinfo}}</span>
             </h4>
@@ -42,12 +42,12 @@ console.log(output)
         EditTodo
     },
     props:['task'],
-    // props: ['channel'],
     data(){
         return{
             // type:'success',
             checked: true,
-            isDone:false
+            isDone:false,
+            displayDeadline:moment(this.task.deadline*1000).format('YYYY/MM/DD/ HH:mm'),
             // task:{
             //     subject:'情報通信工学実験',
             //     deadline: '2020/06/14',
@@ -104,6 +104,7 @@ console.log(output)
     },
     mounted(){
         console.log(this.channel)
+        // this.displayDeadline = moment(task.deadline, 'YYYY年MM月DD日 HH:mm')
     }
   }
 </script>
