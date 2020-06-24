@@ -1,7 +1,9 @@
 <template>
     <div class="todo-container done-yet" v-bind:class="{done:task.done}">
-            <el-button  v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
-            <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini" @click="done" class="done-btn"></el-button>
+        <el-popconfirm  @onConfirm="done" cancelButtonText='いや...' confirmButtonText='終わった!' icon="el-icon-loading" iconColor="" title="このタスク終わった！？">
+            <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
+        </el-popconfirm>
+            <el-button v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
         <el-tag size="medium" type="primary" effect="plain" v-bind:style="task.color">{{task.tag}}</el-tag>
         <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
         <el-tag type="warning" v-if="task.level === 3">三日後</el-tag>
@@ -9,6 +11,7 @@
         <el-tag type="success" v-if="task.level === 1">まだ余裕</el-tag>
         <!-- <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button> -->
         <el-link icon="el-icon-edit edit"></el-link>
+        <!-- <EditTodo :task="task" /> -->
         <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-delete" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
@@ -26,6 +29,7 @@
 
 <script>
 import AddTodo from '~/components/AddTodo.vue'
+import EditTodo from '~/components/EditTodo.vue'
 import moment from 'moment'
 import {db} from '~/plugins/firebase'
 moment.locale('ja')
@@ -34,9 +38,11 @@ var output = m.format('YYYY年MM月DD日 HH:mm:ss dddd')
 console.log(output)
   export default {
     components:{
-        AddTodo
+        AddTodo,
+        EditTodo
     },
     props:['task'],
+    // props: ['channel'],
     data(){
         return{
             // type:'success',
@@ -67,23 +73,21 @@ console.log(output)
                 this.isDone = true
                 const channelId = this.$route.params.id
                 const taskId = this.task.id
-                    console.log(this.task.done)
-                    console.log(channelId)
-                    console.log(taskId)
                 db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
                     done:true
                 })
                     console.log('あと',channelId)
                     console.log('あと',taskId)
+                // this.task.done = true
                 // alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
             }else{
                 // this.type = ''
-                this.isDone = false
-                const channelId = this.$route.params.id
-                const taskId = this.task.id
-                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
-                    done:false
-                })
+                // this.isDone = false
+                // const channelId = this.$route.params.id
+                // const taskId = this.task.id
+                // db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                //     done:false
+                // })
             }
         },
         deletetask(){
@@ -98,8 +102,8 @@ console.log(output)
             });
         }
     },
-    computed:{
-
+    mounted(){
+        console.log(this.channel)
     }
   }
 </script>
@@ -152,9 +156,6 @@ box-shadow: inset 5px 5px 4px #949494,
     right: -9px;
 }
 
-.deadline{
-    /* display: inline-block; */
-}
 
 p{
     text-align: center;
@@ -167,7 +168,6 @@ h5{
 
 
 .detail{
-    /* display: inline-block; */
     height: 50px;
     overflow: scroll;
 }

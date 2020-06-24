@@ -1,8 +1,8 @@
 <template>
-    <div class="add-todo_box">
-            <el-button type="primary" @click="drawer = true" class="el-icon-plus" circle></el-button>
+    <div class="edit-todo_box">
+            <el-button @click="drawer = true" icon="el-icon-edit" circle></el-button>
             <el-drawer
-              title="タスクを追加する"
+              title="タスクを編集する"
               :visible.sync="drawer"
               direction="btt"
               size="57%"
@@ -12,9 +12,9 @@
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
                 <el-form-item label="タグ" required prop="tag"  style="padding-top:30px">
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
-                    <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
-                    </el-option>
-                    <el-option label="タグを追加" value="タグを追加" class="add-tag_popover">
+                    <!-- <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag"> -->
+                    <!-- </el-option> -->
+                    <!-- <el-option label="タグを追加" value="タグを追加" class="add-tag_popover">
                       <el-popover
                         placement="top"
                         width="235"
@@ -27,11 +27,11 @@
                             <h5>あと {{9 - this.tagForm.tag.length}}文字</h5>
                           </el-form-item>
                         </el-form>
-                        <el-button slot="reference">+ 新しいタグ</el-button>
+                        <el-button slot="reference">タグを追加</el-button>
                         <el-button  @click="visible = false">キャンセル</el-button>
                           <el-button type="primary" @click="visible = false,submitTagForm('tagForm')">追加</el-button>
                       </el-popover>
-                    </el-option>
+                    </el-option> -->
                     </el-select>
                 </el-form-item>
                 <el-form-item label="課題締め切り" required>
@@ -51,8 +51,8 @@
                     <el-input type="textarea" v-model="ruleForm.text"></el-input>
                 </el-form-item>
             </el-form>
-                <el-button type="primary" size="mini" @click="submitForm('ruleForm'), addTask()">追加</el-button>
-                <el-button size="mini" @click="resetForm('ruleForm')">リセット</el-button>
+                <el-button type="primary" size="mini" @click="editForm('ruleForm'), addTask()">編集</el-button>
+                <el-button size="mini" @click="editForm('ruleForm')">リセット</el-button>
             </div>
           </el-drawer>
 
@@ -62,6 +62,7 @@
 <script>
 import {db} from '~/plugins/firebase'
 export default {
+    props:['task'],
     data(){
         return {
             visible:false,
@@ -69,14 +70,10 @@ export default {
             tags:[],
             level:1,
             ruleForm: {
-                tag: '',
-                date1: '',
+                tag: task.tag,
+                date1: task.deadline,
                 time: '',
-                text:''          
-            },
-            tagForm: {
-              color:'#409EFF',
-              tag: '',
+                text: task.text          
             },
             rules: {
                     tag: [
@@ -95,57 +92,55 @@ export default {
       };
     },
     methods: {
-      submitTagForm(tagForm){
-        if(this.tagForm.tag !== '' && this.tagForm.color !== '' && this.tagForm.tag.length < 10){
-          const channelId = this.$route.params.id
-          // console.log(this.tagForm.tag)
-          // console.log(this.tagForm.color)
-            console.log(this.tagForm.tag.length)
-          db.collection('channels').doc(channelId).collection('tags').add({
-             tag: this.tagForm.tag,
-             color:'color:'+ this.tagForm.color
-             })
-              this.$message({
-                type: 'success',
-                message: 'タグが新たに追加されました！'
-              });
-              this.ruleForm.tag = this.tagForm.tag
-              this.tagForm.tag = ''
-        }else if(this.tagForm.tag.length > 9){
-                this.$message({
-                type: 'warning',
-                message: 'ごめんなさい！タグは9文字以内でお願いします！'
-              });
-              this.tagForm.tag = ''
-              this.ruleForm.tag = ''
-        }else if(this.tagForm.tag == ''){
-              this.$message({
-                type: 'warning',
-                message: 'タグを入力してね！'
-              });
-              this.ruleForm.tag = ''
-        }else if(this.tagForm.color == ''){
-              this.$message({
-                type: 'warning',
-                message: '色を入力してね！'
-              });
-              this.ruleForm.tag = ''
-        }
-      },
-      submitForm(formName) {
+    //   submitTagForm(tagForm){
+    //     if(this.tagForm.tag !== '' && this.tagForm.color !== '' && this.tagForm.tag.length < 10){
+    //       const channelId = this.$route.params.id
+    //         console.log(this.tagForm.tag.length)
+    //       db.collection('channels').doc(channelId).collection('tags').add({
+    //          tag: this.tagForm.tag,
+    //          color:'color:'+ this.tagForm.color
+    //          })
+    //           this.$message({
+    //             type: 'success',
+    //             message: 'タグが新たに追加されました！'
+    //           });
+    //           this.ruleForm.tag = this.tagForm.tag
+    //           this.tagForm.tag = ''
+    //     }else if(this.tagForm.tag.length > 9){
+    //             this.$message({
+    //             type: 'warning',
+    //             message: 'ごめんなさい！タグは9文字以内でお願いします！'
+    //           });
+    //           this.tagForm.tag = ''
+    //           this.ruleForm.tag = ''
+    //     }else if(this.tagForm.tag == ''){
+    //           this.$message({
+    //             type: 'warning',
+    //             message: 'タグを入力してね！'
+    //           });
+    //           this.ruleForm.tag = ''
+    //     }else if(this.tagForm.color == ''){
+    //           this.$message({
+    //             type: 'warning',
+    //             message: '色を入力してね！'
+    //           });
+    //           this.ruleForm.tag = ''
+    //     }
+    //   },
+      editForm(formName) {
         this.$refs[formName].validate((valid) => {
           if(valid){
             // date1のformatを日付までにして、timeのformatを時間指定してつなぎ合わせたものをdeadlineとして渡せていない
             const channelId = this.$route.params.id
-            if(this.ruleForm.tag !== 'タグを追加'){
-              db.collection('channels').doc(channelId).collection('tasks').add({
+            // if(this.ruleForm.tag !== 'タグを追加'){
+              db.collection('channels').doc(channelId).collection('tasks').set({
                 text: this.ruleForm.text,
                 tag: this.ruleForm.tag,
                 deadline: this.ruleForm.date1,
                 level:this.level,
                 done:false,
               })
-            }
+            // }
             this.drawer = false
           }else{
             return false;
@@ -155,12 +150,12 @@ export default {
       resetForm(formName){
         this.$refs[formName].resetFields();
       },
-      addTask(formName) {
+      editTask(formName) {
         //   成功した時のみにしなきゃ
         if( this.ruleForm.tag !== '' && this.ruleForm.date1 !== '' && this.ruleForm.date2 !== '' &&this.ruleForm.tag !== 'タグを追加'){
           this.$notify({
             title: '成功！',
-            message: 'タスクが新たに追加されました！',
+            message: 'タスクが編集されました！',
             type: 'success'
           });
         }else{
@@ -171,36 +166,21 @@ export default {
         }
       },
     },
-    mounted(){
-      const channelId = this.$route.params.id
-      db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
-        snapshot.docChanges().forEach((change)=>{
-          const doc = change.doc
-          if(change.type === 'added'){
-            this.tags.push({id: doc.id, ...doc.data()})
-          }
-        })
-      })
-    }
+    // mounted(){
+    //   const channelId = this.$route.params.id
+    //   db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
+    //     snapshot.docChanges().forEach((change)=>{
+    //       const doc = change.doc
+    //       if(change.type === 'added'){
+    //         this.tags.push({id: doc.id, ...doc.data()})
+    //       }
+    //     })
+    //   })
+    // }
 }
 </script>
 
 <style>
-  /* .el-icon-plus{
-    background: #83c5e2;
-    box-shadow:  5px 5px 11px #73adc7, 
-                -5px -5px 11px #93ddfd;
-  } */
-  .add-tag_popover{
-    
-  }
-  .add-todo_box{
-    border-radius: 40px;
-    padding: 10px;
-    margin: 10px 5px;
-    text-align: center;
-  }
-
   .add-tag_btn{
     display: block;
   }

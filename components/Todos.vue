@@ -8,12 +8,12 @@
         <br>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
         <div class="todo-component"  v-bind:key="task.key" v-for="task in tasks">
-          <Todo v-if="task.level === 3" :task="task"/>
+          <Todo v-if="task.level === 3" :task="task" />
         </div>
         <br>
         <el-tag type="info" class="limit-tag">締め切り1週間以内</el-tag>
             <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
-                <Todo  v-if="task.level === 2" :task="task"/>
+                <Todo  v-if="task.level === 2" :task="task" />
             </div>
         <br>
         <el-tag type="success" class="limit-tag">まだまだ余裕!</el-tag>
@@ -28,6 +28,7 @@
 import Todo from '~/components/Todo.vue'
 import {db} from '~/plugins/firebase'
 export default {
+    props: ['channel'],
     props: ['tasks'],
     components:{
         Todo
