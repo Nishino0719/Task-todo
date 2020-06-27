@@ -10,24 +10,42 @@
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-refresh"></i>
-              <span slot="title">タスク切り替え</span>
+              <span slot="title">チャンネル切り替え</span>
             </template>
             <el-menu-item-group>
-              <span slot="title">君かっこいいね</span>
-              <el-menu-item v-bind:key="channel.id" v-for="channel in channels" index="1-1"  @click="isCollapse = true">
+              <span slot="title">たくさん管理できてんね</span>
+              <el-menu-item v-bind:key="channel.id" v-for="channel in channels" index="1-1" >
                 <nuxt-link :to="`/channels/${channel.id}`" class="channel" >{{channel.name}}</nuxt-link>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="2">
+            <span slot="title">チャンネルの追加</span>
+            <i class="el-icon-plus"><el-button  type="text" @click="dialogFormVisible = true"></el-button></i>
+            <!-- <el-button  type="text" @click="dialogFormVisible = true"><i class="el-icon-plus"></i></el-button> -->
+                     <el-dialog title="チャンネルを新しく追加する" :visible.sync="dialogFormVisible">
+                        <el-form :model="channelForm">
+                          <el-form-item label="">
+                            <el-input v-model="channelForm.name" autocomplete="off"></el-input>
+                            <h5>あと {{9 - this.channelForm.name.length}}文字</h5>
+                          </el-form-item>
+                        </el-form>
+                        <span slot="footer" class="dialog-footer">
+                          <el-button slot="reference"  type="text" @click="dialogFormVisible = false">+ 新しいチャンネル</el-button>
+                          <el-button  @click="dialogFormVisible= false">キャンセル</el-button>
+                          <el-button type="primary" @click="dialogFormVisible = false,submitChannelForm('channelForm')">追加</el-button>
+                        </span>
+                    </el-dialog>
+          </el-menu-item>
+          <el-menu-item index="3">
               <i class="el-icon-user"></i>
               <span slot="title">ユーザー設定</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="4">
               <i class="el-icon-question"></i>
               <span slot="title">使い方</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="5">
             <i class="el-icon-setting"></i>
             <span slot="title">設定</span>
           </el-menu-item>
@@ -40,7 +58,7 @@
     </div>
 
     <div class="footer-container">
-      <i class="el-icon-location">福岡県飯塚市</i>
+      <i class="el-icon-location">福岡県</i>
       <i class="el-icon-s-promotion">お問い合わせはこちら</i>
       <i class="el-icon-share">シェアする</i>
       <p>&copy;2020 Nishino</p>
@@ -61,11 +79,40 @@ Vue.use(ElementUI)
 export default {
   data() {
       return {
+        dialogFormVisible:false,
+        // visible:false,
         isCollapse: true,
-        channels: []
+        channels: [],
+        channelForm: {
+              name:'',
+        },
       };
     },
     methods: {
+      submitChannelForm(channelForm){
+        if(this.channelForm.name !== '' && this.tagForm.tag.length < 10){
+          const channelId = this.$route.params.id
+            console.log(this.tagForm.tag.length)
+          db.collection('channels').add({
+             name: this.channelForm.name,
+             })
+              this.$message({
+                type: 'success',
+                message: 'チャンネルが新たに追加されました！リロードしたら適応されます！'
+              });
+              this.channelForm.tag = ''
+        }else if(this.channelForm.name.length > 9){
+                this.$message({
+                type: 'warning',
+                message: 'ごめんなさい！チャンネル名は9文字以内でお願いします！'
+              })
+        }else if(this.channelForm.name == ''){
+              this.$message({
+                type: 'warning',
+                message: 'チャンネル名を入力してね！'
+              })
+        }
+      },
       handleOpen(key, keyPath) {
       },
       handleClose(key, keyPath) {

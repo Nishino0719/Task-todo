@@ -14,7 +14,7 @@
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
                     <el-option v-bind:key="tag.tag" v-for="tag in tags" v-bind:value="tag.tag" v-bind:label="tag.tag">
                     </el-option>
-                    <el-option label="タグを追加" value="タグを追加" class="add-tag_popover">
+                    <el-option label="このタグは使用禁止" value="タグを追加" class="add-tag_popover">
                       <el-popover
                         placement="top"
                         width="235"
@@ -27,7 +27,7 @@
                             <h5>あと {{9 - this.tagForm.tag.length}}文字</h5>
                           </el-form-item>
                         </el-form>
-                        <el-button slot="reference">+ 新しいタグ</el-button>
+                        <el-button slot="reference"  type="text">+ 新しいタグ</el-button>
                         <el-button  @click="visible = false">キャンセル</el-button>
                           <el-button type="primary" @click="visible = false,submitTagForm('tagForm')">追加</el-button>
                       </el-popover>
@@ -237,7 +237,7 @@ export default {
                 type: 'error',
                 duration: 5000,
                 showClose: true,
-                message: '「タグを追加」はタグとして使うことができません。'
+                message: 'このタグはタグとして使うことができません。'
               });
           }
           if( timeDiff <= 0){

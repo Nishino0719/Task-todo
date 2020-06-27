@@ -1,6 +1,6 @@
 <template>
     <div class="todo-container done-yet" v-bind:class="{done:task.done,dead:dead}">
-        <el-popconfirm  @onConfirm="done" cancelButtonText='いや...' confirmButtonText='終わった!' icon="el-icon-loading" iconColor="" title="このタスク終わった！？">
+        <el-popconfirm  v-if="dead === false" @onConfirm="done" cancelButtonText='いや...' confirmButtonText='終わった!' icon="el-icon-loading" iconColor="" title="このタスク終わった！？">
             <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
         </el-popconfirm>
             <el-button v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
@@ -18,28 +18,12 @@
         <!-- <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5> -->
         <h5 class="deadline">締め切り：{{displayDeadline}}</h5>
             <h4>
-                <!-- <span class="countdown">あと {{countDown}}</span> -->
-                    <ul class="countdown">
-                        <li v-if="days > 0">
-                            <p class="digit">{{ days }}日</p>
-                            <!-- <p class="text">{{ days > 1 ? '日' : '日' }}</p> -->
-                        </li>
-                        <li>
-                            <p class="digit">{{ hours }}時間</p>
-                            <!-- <p class="text">{{ hours > 1 ? '時間' : '時間' }}</p> -->
-                        </li>
-                        <li>
-                            <p class="digit">{{ minutes }}分</p>
-                            <!-- <p class="text">分</p> -->
-                        </li>
-                        <li>
-                            <p class="digit">{{ seconds }}秒</p>
-                            <!-- <p class="text">秒</p> -->
-                        </li>
-                    </ul>
+                        <p class="" v-if="task.done === false && diff > 0">{{ days }}日{{ hours }}時間{{ minutes }}分{{seconds}}秒</p>
+                        <p v-else-if="task.done === false && diff <= 0">納期...守れなかったね</p>
+                        <p v-if="task.done === true">達成済み</p>
             </h4>
             <p class="detail">
-                未来の自分へ：{{task.text}}
+                詳細：{{task.text}}
             </p>
         <!-- <img src="https://www.theexpatfairs.com/wp-content/uploads/2019/07/just-do-it-gif-transparent-1.gif" class="PartyParrot"> -->
     </div>
@@ -67,8 +51,7 @@ let interval = null;
             checked: true,
             dead:false,
             canDone:true,
-            displayDeadline:moment(this.task.deadline*1000).format('YYYY/MM/DD/ HH:mm'),
-            countDown:moment(this.task.deadline*1000).format('YYYY/MM/DD/ HH:mm'),
+            displayDeadline:moment(this.task.deadline*1000).format('YYYY/MM/DD/(ddd) HH:mm'),
             // task:{
             //     subject:'情報通信工学実験',
             //     deadline: '2020/06/14',
@@ -105,15 +88,30 @@ let interval = null;
     },
     watch:{
         now(value) {
-            this.diff = this.date - this.now;
-            if(this.diff <= 0){
-                this.diff = 0;
+            this.diff = this.date - this.now
+            const channelId = this.$route.params.id
+            const taskId = this.task.id
+
+            if(this.diff <= 0 && this.dead === false){
+                this.diff = -100;
                 // Remove interval
                 // 提出切れフェーズに移る。
-                clearInterval(interval);
+                // clearInterval(interval);
                 if(this.task.done === false){
                     this.dead = true
                 }
+            }else if(this.diff <= 60 * 60 * 24 * 1){
+                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                        level:4
+                })
+            }else if(this.diff <= 60 * 60 * 24 * 3){
+                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                        level:3
+                })
+            }else if(this.diff <=  60 * 60 * 24 * 7){
+                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                        level:2
+                })               
             }
         }
     },
@@ -178,25 +176,25 @@ let interval = null;
     /* background: linear-gradient(145deg, #e6e6e6, #ffffff);
     box-shadow:  11px 11px 22px #757575, 
                 -11px -11px 22px #ffffff; */
-              background: #d0d0d0;
-box-shadow:  5px 5px 4px #949494, 
-             -5px -5px 4px #ffffff;
+background: linear-gradient(145deg, #fefefe, #d5d5d5);
+box-shadow:  5px 5px 15px #5f5f5f, 
+             -5px -5px 15px #ffffff;
 }
 
 .done{
     /* ニューモーフィズムデザインでやってみる */
-    background: #b6e4e7;
-    box-shadow: inset 5px 5px 10px #495b5c, 
-                inset -5px -5px 10px #ffffff;
               /* background: #d0d0d0;
 box-shadow: inset 5px 5px 7px #535353, 
             inset -5px -5px 7px #ffffff; */
+            background: #81eeb6;
+box-shadow: inset 5px 5px 15px #345f49, 
+            inset -5px -5px 15px #ceffff;
 }
 
 .dead{
-background: linear-gradient(145deg, #c34b47, #e85955);
-box-shadow:  5px 5px 7px #572120, 
-             -5px -5px 7px #ff857e;
+background: linear-gradient(145deg, #d47171, #fd8787);
+box-shadow:  5px 5px 15px #5e3232, 
+             -5px -5px 15px #ffcaca;
 }
 
 .PartyParrot{
@@ -223,10 +221,10 @@ p{
 }
 
 h5{
-    color: #a5a5a5;
+    color: #7f7f7f;
 }
 
-.countdown li{
+/* .countdown li{
     display: inline-block;
     text-align: center;
     position: relative;
@@ -235,9 +233,9 @@ h5{
 
 .countdown li:after{
     position: absolute;
-    right: -13px;
+    right: -40px;
     font-size: 16px;
-}
+} */
 
 .detail{
     height: 50px;

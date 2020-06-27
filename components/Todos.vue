@@ -2,8 +2,11 @@
     <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
         <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
+            <div  v-if="task.level === 4">
+                <Todo :task="task"/>
+            </div>
             <!-- v-ifとv-forの併用はできないのでやり方は後で考える -->
-           <Todo v-if="task.level === 4" :task="task"/>
+           <!-- <Todo v-if="task.level === 4" :task="task"/> -->
         </div>
         <br>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
@@ -33,8 +36,16 @@ export default {
     components:{
         Todo
     },
+    data(){
+        return{
+            tasklevel:0
+        }
+    },
     mounted(){
-        console.log(this.tasks)
+        // console.log(this.tasks)
+        // const channelId = this.$route.params.id
+        // const taskId = this.task.id
+        // const taskRef = db.collection('channels').doc(channelId).collection('tasks').doc(taskId).where("level", "==", 4).get().
     }
 }
 </script>
