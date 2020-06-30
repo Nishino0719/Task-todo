@@ -1,14 +1,13 @@
 <template>
   <div class="container">
       <div class="todos-title_container">
-          <h2>{{channel.name}}</h2>
-          <h2>ｱﾊﾊﾊﾊ</h2>
         <!-- <el-badge :value="12" class="item"  type="primary">
           <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
         </el-badge>
         <el-badge :value="5" class="item"  type="primary">
           <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
         </el-badge> -->
+        <h2>{{channel.name}}</h2>
         <img src="https://pbs.twimg.com/profile_images/1238812638387163136/xVj9-uVR_400x400.jpg" alt="thumnail" class="thumnail">
       </div>
       <div class="todos-container">
@@ -33,7 +32,8 @@ export default {
   data(){
       return {
           tasks: [],
-          channel:[]
+          channel:{},
+          channelName:''
       }
   },
   mounted(){
@@ -53,20 +53,18 @@ export default {
               }
           })
       })
-      const docRef = db.collection('channels').doc(channelId)
-      docRef.get().then(function(doc) {
-        if (doc.exists) {
-            console.log("ドキュメントでーた:", doc.data().name)
-            this.channel.push({id: doc.id, ...doc.data()})
-            console.log('ohyes',this.channel)
-           
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("ドキュメントが存在しません")
-            }
-        }).catch(function(error) {
-            console.log("Errorです:", error)
-        })
+      // const docRef = db.collection('channels').doc(channelId)
+      // docRef.get().then(function(doc) {
+      //   if (doc.exists) {
+      //       console.log("ドキュメントでーた:", doc.data().name)
+      //       this.channel.push({id: doc.id, ...doc.data()})
+      //   } else {
+      //       // doc.data() will be undefined in this case
+      //       console.log("ドキュメントが存在しません")
+      //       }
+      //   }).catch(function(error) {
+      //       console.log("Errorだよーんwwww:", error)
+      //   })
         }
 }
 </script>

@@ -186,15 +186,15 @@ export default {
                 // console.log('今の秒数',nowSecond)
                 // console.log('残り',timeDiff)
 
-                if(timeDiff <= 60 * 60 * 24 * 1){
-                  this.level = 4
-                }else if(timeDiff <= 60 * 60 * 24 * 3){
-                  this.level = 3
-                }else if(timeDiff <= 60 * 60 * 24 * 7){
-                  this.level = 2
-                }else{
-                  this.level = 1
-                }
+                // if(timeDiff <= 60 * 60 * 24 * 1){
+                //   this.level = 4
+                // }else if(timeDiff <= 60 * 60 * 24 * 3){
+                //   this.level = 3
+                // }else if(timeDiff <= 60 * 60 * 24 * 7){
+                //   this.level = 2
+                // }else{
+                //   this.level = 1
+                // }
             this.drawer = false
             const channelId = this.$route.params.id
             if(this.ruleForm.tag !== 'タグを追加' && timeDiff > 0){
@@ -202,7 +202,6 @@ export default {
                 text: this.ruleForm.text,
                 tag: this.ruleForm.tag,
                 deadline: deadlineSecond,
-                level:this.level,
                 done:false,
               })
             }

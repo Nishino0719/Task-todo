@@ -5,10 +5,10 @@
         </el-popconfirm>
             <el-button v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
         <el-tag size="medium" type="primary" effect="plain" v-bind:style="task.color">{{task.tag}}</el-tag>
-        <el-tag type="danger" v-if="task.level === 4">今日中</el-tag>
-        <el-tag type="warning" v-if="task.level === 3">三日後</el-tag>
-        <el-tag type="info" v-if="task.level === 2">1週間後</el-tag>
-        <el-tag type="success" v-if="task.level === 1">まだ余裕</el-tag>
+        <el-tag type="danger" v-if="task.deadline - now <= 60 * 60 * 24 * 1">今日中</el-tag>
+        <el-tag type="warning" v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1">三日後</el-tag>
+        <el-tag type="info" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 ">1週間後</el-tag>
+        <el-tag type="success" v-if="60 * 60 * 24 * 7 < task.deadline - now">まだ余裕</el-tag>
         <!-- <el-button class="el-icon-edit edit" size="mini" circle type="info"></el-button> -->
         <el-link icon="el-icon-edit edit"></el-link>
         <!-- <EditTodo :task="task" /> -->
@@ -101,17 +101,17 @@ let interval = null;
                     this.dead = true
                 }
             }else if(this.diff <= 60 * 60 * 24 * 1){
-                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
-                        level:4
-                })
+                // db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                //         level:4
+                // })
             }else if(this.diff <= 60 * 60 * 24 * 3){
-                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
-                        level:3
-                })
+                // db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                //         level:3
+                // })
             }else if(this.diff <=  60 * 60 * 24 * 7){
-                db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
-                        level:2
-                })               
+                // db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
+                //         level:2
+                // })               
             }
         }
     },

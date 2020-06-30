@@ -52,7 +52,7 @@
         </el-menu>
         </div>
       </div>
-      <div class="main-content">  
+      <div class="main-content"> 
         <nuxt />
       </div>
     </div>

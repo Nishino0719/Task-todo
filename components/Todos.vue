@@ -2,7 +2,7 @@
     <div class="todos-component">
         <el-tag type="danger" size="medium" class="limit-tag">締め切り24時間以内</el-tag>
         <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
-            <div  v-if="task.level === 4">
+            <div  v-if="task.deadline - now <= 60 * 60 * 24 * 1">
                 <Todo :task="task"/>
             </div>
             <!-- v-ifとv-forの併用はできないのでやり方は後で考える -->
@@ -11,17 +11,17 @@
         <br>
         <el-tag type="warning" class="limit-tag">締め切り3日以内</el-tag>
         <div class="todo-component"  v-bind:key="task.key" v-for="task in tasks">
-          <Todo v-if="task.level === 3" :task="task" />
+          <Todo v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1" :task="task" />
         </div>
         <br>
         <el-tag type="info" class="limit-tag">締め切り1週間以内</el-tag>
             <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
-                <Todo  v-if="task.level === 2" :task="task" />
+                <Todo  v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 " :task="task" />
             </div>
         <br>
         <el-tag type="success" class="limit-tag">まだまだ余裕!</el-tag>
         <div class="todo-component" v-bind:key="task.key"  v-for="task in tasks" >
-            <Todo v-if="task.level === 1" :task="task"/>            
+            <Todo v-if="60 * 60 * 24 * 7 < task.deadline - now" :task="task"/>            
         </div>
         <br>
     </div>
@@ -38,14 +38,10 @@ export default {
     },
     data(){
         return{
-            tasklevel:0
+            now: Math.trunc((new Date()).getTime() / 1000),
         }
     },
     mounted(){
-        // console.log(this.tasks)
-        // const channelId = this.$route.params.id
-        // const taskId = this.task.id
-        // const taskRef = db.collection('channels').doc(channelId).collection('tasks').doc(taskId).where("level", "==", 4).get().
     }
 }
 </script>
