@@ -9,6 +9,7 @@
         </el-badge> -->
         <h2>{{channel.name}}</h2>
         <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
+             <p class="logout" v-if="isAuthenticated"  v-on:click="logout">ログアウト</p>
       </div>
       <div class="todos-container">
         <Todos :tasks="tasks"/>
@@ -77,6 +78,17 @@ export default {
         },
         methods:{
           ...mapActions(['setUser']),
+          logout() {
+              firebase.auth().signOut()
+                .then(() => {
+                  this.setUser(null)
+                  window.alert('ログアウトに成功！')
+                })
+                .catch((e) => {
+                  window.alert('ログアウトに失敗しました')
+                  console.log(e)
+                })
+            }
         }
 }
 </script>

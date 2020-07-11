@@ -72,7 +72,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'
-import {db} from '~/plugins/firebase'
+import {db,firebase} from '~/plugins/firebase'
+import { mapActions } from 'vuex'
 
 locale.use(lang)
 Vue.use(ElementUI)
@@ -89,6 +90,7 @@ export default {
       };
     },
     methods: {
+      ...mapActions(['setUser']),
       submitChannelForm(channelForm){
         if(this.channelForm.name !== '' && this.tagForm.tag.length < 10){
           const channelId = this.$route.params.id
@@ -119,12 +121,25 @@ export default {
       }
     },
     mounted(){
+     firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.setUser(user)
+        }
+      }),
     db.collection('channels').get()
     .then((querySnapshot)=>{
       querySnapshot.forEach((doc) =>{
         this.channels.push({id: doc.id, ...doc.data()})
       })
     })
+  },
+  computed:{
+          isAuthenticated() {
+              return this.$store.getters.isAuthenticated
+          },
+          user() {
+             return this.$store.state.user
+           },
   }
 }
 </script>

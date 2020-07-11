@@ -2,8 +2,7 @@ export const strict = false
 
 export const state = () => ({
     user: {
-      email: 'test@example.com',
-      uid: 'daiekka'
+      uid:''
     }
    })
 
