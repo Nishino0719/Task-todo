@@ -8,12 +8,12 @@
           <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
         </el-badge> -->
         <h2>{{channel.name}}</h2>
-        <img src="https://pbs.twimg.com/profile_images/1238812638387163136/xVj9-uVR_400x400.jpg" alt="thumnail" class="thumnail">
+        <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
       </div>
       <div class="todos-container">
         <Todos :tasks="tasks"/>
       </div>
-      <div class="add-todo_container">
+      <div  class="add-todo_container">
         <AddTodo />
       </div>
   </div>
@@ -22,7 +22,8 @@
 <script>
 import Todos from '~/components/Todos.vue'
 import AddTodo from '~/components/AddTodo.vue'
-import {db} from '~/plugins/firebase'
+import {db,firebase} from '~/plugins/firebase'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -65,6 +66,17 @@ export default {
       //   }).catch(function(error) {
       //       console.log("Errorだよーんwwww:", error)
       //   })
+        },
+        computed:{
+          isAuthenticated() {
+              return this.$store.getters.isAuthenticated
+          },
+          user() {
+             return this.$store.state.user
+           },
+        },
+        methods:{
+          ...mapActions(['setUser']),
         }
 }
 </script>

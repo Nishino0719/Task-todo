@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import {db} from '~/plugins/firebase'
+import {db,firebase} from '~/plugins/firebase'
+import { mapActions } from 'vuex'
 import moment from 'moment'
 moment.locale('ja')
 export default {
@@ -130,6 +131,7 @@ export default {
       };
     },
     methods: {
+      ...mapActions(['setUser']),
       submitTagForm(tagForm){
         if(this.tagForm.tag !== '' && this.tagForm.color !== '' && this.tagForm.tag.length < 10){
           const channelId = this.$route.params.id
@@ -203,6 +205,10 @@ export default {
                 tag: this.ruleForm.tag,
                 deadline: deadlineSecond,
                 done:false,
+                user: {
+                      name: this.user.displayName,
+                      uid:this.user.uid
+                      }
               })
             }
           }else{
@@ -261,7 +267,13 @@ export default {
           }
         })
       })       
+    },
+    computed:{
+      user() {
+       return this.$store.state.user
+      },
     }
+
 }
 </script>
 
@@ -271,9 +283,6 @@ export default {
     box-shadow:  5px 5px 11px #73adc7, 
                 -5px -5px 11px #93ddfd;
   } */
-  .add-tag_popover{
-    
-  }
   .add-todo_box{
     border-radius: 40px;
     padding: 10px;

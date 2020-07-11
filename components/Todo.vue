@@ -121,7 +121,7 @@ let interval = null;
     methods:{
         done: function(){
             if(this.task.done === false){
-                // this.type = 'success'
+                
                 this.$message({
                     message: 'タスク完了！よくやった！お疲れ様！！！',
                     type: 'success'
