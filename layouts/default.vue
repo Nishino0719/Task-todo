@@ -39,7 +39,7 @@
           </el-menu-item>
           <el-menu-item index="3">
               <i class="el-icon-user"></i>
-              <span slot="title">ユーザー設定</span>
+              <span slot="title">アカウント切り替え</span>
           </el-menu-item>
           <el-menu-item index="4">
               <i class="el-icon-question"></i>

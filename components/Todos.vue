@@ -42,11 +42,10 @@ export default {
         ...mapActions(['setUser']),
     },
     mounted(){
-        // console.log('今のアカウントはTodos', this.user.uid)
         firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.setUser(user)
-          console.log('今のアカウントはTodos', this.user.uid)
+        //   console.log('今のアカウントはTodos', this.user.uid)
         }
       })
     },

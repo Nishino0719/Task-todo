@@ -7,9 +7,11 @@
         <el-badge :value="5" class="item"  type="primary">
           <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
         </el-badge> -->
-        <h2>{{channel.name}}</h2>
+        <h2 class="channel-name">{{channel}}</h2>
         <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
-             <p class="logout" v-if="isAuthenticated"  v-on:click="logout">ログアウト</p>
+        <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
+            <el-button slot="reference" size="mini" v-if="isAuthenticated" class="logout" plain>ログアウト</el-button>
+        </el-popconfirm>
       </div>
       <div class="todos-container">
         <Todos :tasks="tasks"/>
@@ -34,8 +36,9 @@ export default {
   data(){
       return {
           tasks: [],
-          channel:{},
-          channelName:''
+          channel:[],
+          channelName:[],
+          visible: false,
       }
   },
   mounted(){
@@ -55,40 +58,40 @@ export default {
               }
           })
       })
-      // const docRef = db.collection('channels').doc(channelId)
-      // docRef.get().then(function(doc) {
-      //   if (doc.exists) {
-      //       console.log("ドキュメントでーた:", doc.data().name)
-      //       this.channel.push({id: doc.id, ...doc.data()})
-      //   } else {
-      //       // doc.data() will be undefined in this case
-      //       console.log("ドキュメントが存在しません")
-      //       }
-      //   }).catch(function(error) {
-      //       console.log("Errorだよーんwwww:", error)
-      //   })
+      const docRef = db.collection('channels').doc(channelId)
+      docRef.get().then((doc)=>{
+        if(doc.exists){
+          this.channel.push(doc.data().name)
+        }
+        })
         },
         computed:{
           isAuthenticated() {
-              return this.$store.getters.isAuthenticated
+            return this.$store.getters.isAuthenticated
           },
           user() {
-             return this.$store.state.user
+            return this.$store.state.user
            },
         },
         methods:{
           ...mapActions(['setUser']),
-          logout() {
+          logout:function(){
               firebase.auth().signOut()
                 .then(() => {
-                  this.setUser(null)
-                  window.alert('ログアウトに成功！')
+                  this.setUser('')
+                  this.$message({
+                    message: 'ログアウトに成功しました！',
+                    type: 'success'
+                  })
                 })
                 .catch((e) => {
-                  window.alert('ログアウトに失敗しました')
-                  console.log(e)
+                  this.$message({
+                    message: 'ログアウトに失敗しました',
+                    type: 'danger'
+                  })
                 })
-            }
+                
+            },
         }
 }
 </script>
@@ -107,13 +110,24 @@ export default {
     margin: 20px;
   }
 
+.channel-name{
+  margin: 30px;
+}
+
+.logout{
+  margin-left:30px;
+  position: absolute;
+  right: 5px;
+  margin-top: 36px;
+  
+}
   .thumnail{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
     position: absolute;
-    right: 10px;
+    right: 40px;
   }
 
   .todos-container{

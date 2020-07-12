@@ -180,23 +180,6 @@ export default {
                 const milli = date.getTime()
                 const nowSecond =  Math.floor(milli/1000)
                 const timeDiff = deadlineSecond - nowSecond
-                // console.log('msで出てる？→', end_time.diff(start_time)/1000)
-                // console.log('format変えてる', moment(this.ruleForm.date1).format('l'))
-                // console.log('startOf',moment(this.ruleForm.date1).startOf('day'))
-                // console.log('startOf.unix',moment(this.ruleForm.date1).startOf('day').unix())
-                // console.log('deadlineの秒数はこっちになります！',moment(this.ruleForm.date1).startOf('day').unix() + end_time.diff(start_time)/1000)
-                // console.log('今の秒数',nowSecond)
-                // console.log('残り',timeDiff)
-
-                // if(timeDiff <= 60 * 60 * 24 * 1){
-                //   this.level = 4
-                // }else if(timeDiff <= 60 * 60 * 24 * 3){
-                //   this.level = 3
-                // }else if(timeDiff <= 60 * 60 * 24 * 7){
-                //   this.level = 2
-                // }else{
-                //   this.level = 1
-                // }
             this.drawer = false
             const channelId = this.$route.params.id
             if(this.ruleForm.tag !== 'タグを追加' && timeDiff > 0){
@@ -246,7 +229,6 @@ export default {
               });
           }
           if( timeDiff <= 0){
-            // alert('Oops!! 今の時間以降を入力してね！')
                 this.$message({
                 type: 'error',
                 duration: 5000,

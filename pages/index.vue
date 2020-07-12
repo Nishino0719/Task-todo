@@ -1,9 +1,9 @@
 <template>
   <div class="container">
+  <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
     <h2>ようこそ</h2>
     <p>初めてですか？初めての方はこちらから説明を読んでね</p>
   <button v-on:click="login">Googleアカウントでログイン</button>
-  <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
   </div>
 </template>
 

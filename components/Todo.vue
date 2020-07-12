@@ -52,18 +52,6 @@ let interval = null;
             dead:false,
             canDone:true,
             displayDeadline:moment(this.task.deadline*1000).format('YYYY/MM/DD/(ddd) HH:mm'),
-            // task:{
-            //     subject:'情報通信工学実験',
-            //     deadline: '2020/06/14',
-            //     limit:'作成中',
-            //     detailText:'未来の自分がんばってね！',
-            //     date: moment(60*10*1000),
-            //     nowdate:moment().format('DD日HH時間mm分ss秒'),
-            //     test:moment().format('YYYY年MM月DD日 HH:mm:ss dddd'),
-            //     user:{
-            //         name: 'SHA256',
-            //     }
-            // }
         }
     },
     created(){
@@ -149,12 +137,9 @@ let interval = null;
         deletetask(){
             const channelId = this.$route.params.id
             const taskId = this.task.id
-            console.log('本当に削除してもいいんですね。ドキュメントID', this.task.id)
             // this.task.splice(index, 1);
             db.collection("channels").doc(channelId).collection('tasks').doc(taskId).delete().then(function(){
-            console.log("ドキュメントの削除をしました")
             }).catch(function(error) {
-            console.error("ドキュメントの削除ができません: ", error)
             });
         }
     },
