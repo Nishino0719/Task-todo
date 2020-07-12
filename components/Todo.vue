@@ -11,7 +11,7 @@
         <el-tag type="info" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 ">1週間後</el-tag>
         <el-tag type="success" v-if="60 * 60 * 24 * 7 < task.deadline - now">まだ余裕</el-tag>
         <!-- 編集 -->
-        <el-button class="el-icon-edit edit" size="mini" circle type="" @click="drawer = true"></el-button>
+        <el-button  v-if="dead === false" class="el-icon-edit edit" size="mini" circle type="" @click="drawer = true"></el-button>
             <el-drawer
               title="タスクを編集する"
               :visible.sync="drawer"
@@ -31,7 +31,6 @@
                 </el-form-item>
                 <el-form-item label="課題締め切り" required>
                     <el-col :span="11">
-                        <!-- date1とdate2がdeadlineに変換されてしまったのでどうしよう -->
                     <el-form-item prop="date1">
                         <el-date-picker type="date" placeholder="日付を選んでね！" v-model="ruleForm.date1" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
                     </el-form-item>
@@ -55,11 +54,10 @@
         <el-popconfirm @onConfirm="deletetask" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info" iconColor="red" title="本当に削除してもよろしいですか？" class="delete-btn">
             <el-button slot="reference" icon="el-icon-delete" circle size="mini" type="danger"></el-button>
         </el-popconfirm>
-        <!-- <h5 class="deadline">締め切り：{{task.deadline.seconds}}</h5> -->
         <h5 class="deadline">締め切り：{{displayDeadline}}</h5>
             <h4>
                         <p class="" v-if="task.done === false && diff > 0">{{ days }}日{{ hours }}時間{{ minutes }}分{{seconds}}秒</p>
-                        <p v-else-if="task.done === false && diff <= 0">納期...守れなかったね</p>
+                        <p v-else-if="task.done === false && diff <= 0">期限を過ぎています</p>
                         <p v-if="task.done === true">達成済み</p>
             </h4>
             <p class="detail">

@@ -12,7 +12,6 @@
 </template>
 
 <script>
-// import {db} from '~/plugins/firebase'
 import { db,firebase } from '~/plugins/firebase'
 import { mapActions } from 'vuex'
 
@@ -71,14 +70,14 @@ export default {
   height: 100vh;
 }
 
-.thumnail{
+  .thumnail{
     border-radius: 50%;
     width: 25px;
     height: 25px;
     margin-top: 5px;
     position: absolute;
     right: 40px;
-}
+  }
 
 .img-demo{
   margin-top: 100px;
