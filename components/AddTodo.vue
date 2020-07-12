@@ -25,6 +25,7 @@
                             <el-color-picker v-model="tagForm.color" size="small"></el-color-picker>
                             <el-input v-model="tagForm.tag" autocomplete="off"></el-input>
                             <h5>あと {{9 - this.tagForm.tag.length}}文字</h5>
+                            <h5>タグの色は現在鋭意製作中です。</h5>
                           </el-form-item>
                         </el-form>
                         <el-button slot="reference"  type="text">+ 新しいタグ</el-button>
@@ -176,16 +177,13 @@ export default {
                 const start_time = moment("0:00", 'HH:mm')
                 const end_time = moment(this.ruleForm.time, 'HH:mm')
                 const deadlineSecond = moment(this.ruleForm.date1).startOf('day').unix() + end_time.diff(start_time)/1000
-                const date = new Date() ;
-                const milli = date.getTime()
-                const nowSecond =  Math.floor(milli/1000)
-                const timeDiff = deadlineSecond - nowSecond
             this.drawer = false
-            const channelId = this.$route.params.id
+            const channelId = this.$route.params.id  
             if(this.ruleForm.tag !== 'タグを追加' && timeDiff > 0){
               db.collection('channels').doc(channelId).collection('tasks').add({
                 text: this.ruleForm.text,
                 tag: this.ruleForm.tag,
+                // color:this.tagForm.color,
                 deadline: deadlineSecond,
                 done:false,
                 user: {

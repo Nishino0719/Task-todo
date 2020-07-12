@@ -13,7 +13,7 @@
               <span slot="title">チャンネル切り替え</span>
             </template>
             <el-menu-item-group>
-              <span slot="title">たくさん管理できてんね</span>
+              <span slot="title">チャンネルを選んでください</span>
               <el-menu-item v-bind:key="channel.id" v-for="channel in channels" index="1-1" >
                 <nuxt-link :to="`/channels/${channel.id}`" class="channel" >{{channel.name}}</nuxt-link>
               </el-menu-item>

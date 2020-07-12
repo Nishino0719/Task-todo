@@ -4,7 +4,8 @@
             <el-button  v-if="task.done === false" v-model="checked" type="" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
         </el-popconfirm>
             <el-button v-if="task.done === true" v-model="checked" type="success" icon="el-icon-check" circle size="mini"  slot="reference" class="done-btn"></el-button>
-        <el-tag size="medium" type="primary" effect="plain" v-bind:style="task.color">{{task.tag}}</el-tag>
+        <!-- <el-tag size="medium" type="primary" effect="plain" v-bind:style="`color:${task.color}`">{{task.tag}}</el-tag> -->
+        <el-tag size="medium" type="primary" effect="plain">{{task.tag}}</el-tag>
         <el-tag type="danger" v-if="task.deadline - now <= 60 * 60 * 24 * 1">今日中</el-tag>
         <el-tag type="warning" v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1">三日後</el-tag>
         <el-tag type="info" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 ">1週間後</el-tag>
@@ -140,6 +141,11 @@ let interval = null;
             // this.task.splice(index, 1);
             db.collection("channels").doc(channelId).collection('tasks').doc(taskId).delete().then(function(){
             }).catch(function(error) {
+            });
+
+            this.$message({
+                message: 'タスクが削除されました',
+                type: 'info'
             });
         }
     },

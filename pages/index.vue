@@ -1,6 +1,9 @@
 <template>
   <div class="container">
   <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
+  <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
+    <el-button slot="reference" size="mini" v-if="isAuthenticated" class="logout" plain>ログアウト</el-button>
+  </el-popconfirm>
     <h2>ようこそ</h2>
     <p>初めてですか？初めての方はこちらから説明を読んでね</p>
   <button v-on:click="login">Googleアカウントでログイン</button>
@@ -38,7 +41,24 @@ export default {
        }).catch((error) => {
          window.alert(error)
        })
-    }
+    },
+          logout:function(){
+              firebase.auth().signOut()
+                .then(() => {
+                  this.setUser('')
+                  this.$message({
+                    message: 'ログアウトに成功しました！',
+                    type: 'success'
+                  })
+                })
+                .catch((e) => {
+                  this.$message({
+                    message: 'ログアウトに失敗しました',
+                    type: 'danger'
+                  })
+                })
+                
+            },
   }
 }
 </script>
@@ -57,6 +77,15 @@ export default {
     margin-top: 10px;
     position: absolute;
     right: 10px;
+}
+
+
+.logout{
+  margin-left:30px;
+  position: absolute;
+  right: 5px;
+  margin-top: 36px;
+  
 }
 
 </style>
