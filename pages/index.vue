@@ -4,9 +4,10 @@
   <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
     <el-button slot="reference" size="mini" v-if="isAuthenticated" class="logout" plain>ログアウト</el-button>
   </el-popconfirm>
-    <h2>ようこそ</h2>
-    <p>初めてですか？初めての方はこちらから説明を読んでね</p>
   <button v-on:click="login">Googleアカウントでログイン</button>
+
+
+  <img src="~/assets/image/demo.png" class="img-demo">
   </div>
 </template>
 
@@ -72,20 +73,22 @@ export default {
 
 .thumnail{
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
     position: absolute;
-    right: 10px;
+    right: 40px;
 }
 
-
+.img-demo{
+  margin-top: 100px;
+  width: 100vw;
+}
 .logout{
   margin-left:30px;
   position: absolute;
   right: 5px;
   margin-top: 36px;
-  
 }
 
 </style>

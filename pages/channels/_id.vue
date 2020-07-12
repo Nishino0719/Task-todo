@@ -1,16 +1,11 @@
 <template>
   <div class="container">
       <div class="todos-title_container">
-        <!-- <el-badge :value="12" class="item"  type="primary">
-          <el-tag size="medium" type="danger" effect="plain" class="subject-tag">情報通信工学実験</el-tag>
-        </el-badge>
-        <el-badge :value="5" class="item"  type="primary">
-          <el-tag size="medium" type="info" effect="plain" class="subject-tag">確率統計</el-tag>
-        </el-badge> -->
-        <h2 class="channel-name">{{channel}}</h2>
+        <h3 class="channel-name">{{channel}}</h3>
+        <el-link type="primary" class="top-link" href="/" :underline="false">TOPへ</el-link>
         <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
         <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
-            <el-button slot="reference" size="mini" v-if="isAuthenticated" class="logout" plain>ログアウト</el-button>
+            <el-button slot="reference" size="mini" v-if="isAuthenticated" type="info" class="logout" plain>ログアウト</el-button>
         </el-popconfirm>
       </div>
       <div class="todos-container">
@@ -112,8 +107,11 @@ export default {
 
 .channel-name{
   margin: 30px;
+  margin-top: 20px; 
 }
-
+.top-link{
+  text-align: center;
+}
 .logout{
   margin-left:30px;
   position: absolute;

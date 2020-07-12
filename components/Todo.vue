@@ -123,16 +123,6 @@ let interval = null;
                 })
                     console.log('あと',channelId)
                     console.log('あと',taskId)
-                // this.task.done = true
-                // alert('タスクを削除しますか？しない場合は締め切り日を過ぎたら自動的に削除されます。')
-            }else{
-                // this.type = ''
-                // this.isDone = false
-                // const channelId = this.$route.params.id
-                // const taskId = this.task.id
-                // db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
-                //     done:false
-                // })
             }
         },
         deletetask(){
