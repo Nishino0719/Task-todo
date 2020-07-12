@@ -2,19 +2,19 @@
     <div class="todos-component">
         <div class="todo-component" v-bind:key="task.key" v-for="task in tasks">
             <div v-if="user.uid === task.user.uid">
-                <el-tag type="danger" size="medium" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 1">締め切り24時間以内</el-tag>
+                <!-- <el-tag type="danger" size="medium" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 1">締め切り24時間以内</el-tag> -->
                     <div  v-if="task.deadline - now <= 60 * 60 * 24 * 1">
                         <Todo :task="task"/>
                     </div>
-                <el-tag type="warning" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1">締め切り3日以内</el-tag>
+                <!-- <el-tag type="warning" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1">締め切り3日以内</el-tag> -->
 
                 <Todo v-if="task.deadline - now <= 60 * 60 * 24 * 3 && task.deadline - now > 60 * 60 * 24 * 1" :task="task" />
               
-                <el-tag type="info" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 " >締め切り1週間以内</el-tag>
+                <!-- <el-tag type="info" class="limit-tag" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 " >締め切り1週間以内</el-tag> -->
             
                         <Todo  v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 " :task="task" />
                     
-                <el-tag type="success" class="limit-tag" v-if="60 * 60 * 24 * 7 < task.deadline - now">まだまだ余裕!</el-tag>
+                <!-- <el-tag type="success" class="limit-tag" v-if="60 * 60 * 24 * 7 < task.deadline - now">まだまだ余裕!</el-tag> -->
                 
                     <Todo v-if="60 * 60 * 24 * 7 < task.deadline - now" :task="task"/>            
                 

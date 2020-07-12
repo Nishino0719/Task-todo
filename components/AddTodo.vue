@@ -265,11 +265,6 @@ export default {
 </script>
 
 <style>
-  /* .el-icon-plus{
-    background: #83c5e2;
-    box-shadow:  5px 5px 11px #73adc7, 
-                -5px -5px 11px #93ddfd;
-  } */
   .add-todo_box{
     border-radius: 40px;
     padding: 10px;

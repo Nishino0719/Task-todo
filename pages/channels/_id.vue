@@ -3,6 +3,11 @@
       <div class="todos-title_container">
         <h3 class="channel-name">{{channel}}</h3>
         <el-link type="primary" class="top-link" href="/" :underline="false">TOPへ</el-link>
+        <div class="" v-bind:key="tag.key" v-for="tag in tags">
+          <div class="" v-if="user.uid === tag.user.uid">
+            <el-tag class="subject-tag" size="medium" type="primary" effect="plain" closable   :disable-transitions="false" @close="deleteTag(tag)">{{tag.tag}}</el-tag>
+          </div>
+        </div>
         <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
         <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
             <el-button slot="reference" size="mini" v-if="isAuthenticated" type="info" class="logout" plain>ログアウト</el-button>
@@ -31,6 +36,7 @@ export default {
   data(){
       return {
           tasks: [],
+          tags:[],
           channel:[],
           channelName:[],
           visible: false,
@@ -53,6 +59,13 @@ export default {
               }
           })
       })
+      db.collection('channels').doc(channelId).collection('tags').get()
+      .then((querySnapshot)=>{
+        querySnapshot.forEach((doc) =>{
+          this.tags.push({id: doc.id, ...doc.data()})
+        })
+      })
+      
       const docRef = db.collection('channels').doc(channelId)
       docRef.get().then((doc)=>{
         if(doc.exists){
@@ -70,6 +83,13 @@ export default {
         },
         methods:{
           ...mapActions(['setUser']),
+          deleteTag(tag){
+            const channelId = this.$route.params.id
+            const tagId = tag.id
+            console.log(tag)
+            db.collection("channels").doc(channelId).collection('tags').doc(tagId).delete()
+              this.tags.splice(this.tags.indexOf(tag),1)
+          },
           logout:function(){
               firebase.auth().signOut()
                 .then(() => {
@@ -111,6 +131,10 @@ export default {
 }
 .top-link{
   text-align: center;
+}
+
+.subject-tag{
+  margin:20px 15px; 
 }
 .logout{
   margin-left:30px;

@@ -11,15 +11,16 @@
         <el-tag type="info" v-if="task.deadline - now <= 60 * 60 * 24 * 7 && task.deadline - now > 60 * 60 * 24 * 3 ">1週間後</el-tag>
         <el-tag type="success" v-if="60 * 60 * 24 * 7 < task.deadline - now">まだ余裕</el-tag>
         <!-- 編集 -->
-        <el-button  v-if="dead === false" class="el-icon-edit edit" size="mini" circle type="" @click="drawer = true"></el-button>
+        <el-button  v-if="dead === false && task.done === false" class="el-icon-edit edit" size="mini" circle type="" @click="drawer = true"></el-button>
             <el-drawer
               title="タスクを編集する"
               :visible.sync="drawer"
               direction="btt"
               size="57%"
               :with-header="false"
+              class="edit-task__content"
             >
-              <div class="edit-task__content">
+              <div class="">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-width="120px" size="medium">
                 <el-form-item label="タグ" required prop="tag"  style="padding-top:30px">
                     <el-select v-model="ruleForm.tag" placeholder="タグを選んでね！">
@@ -206,8 +207,6 @@ let interval = null;
                 db.collection('channels').doc(channelId).collection('tasks').doc(taskId).update({
                     done:true
                 })
-                    console.log('あと',channelId)
-                    console.log('あと',taskId)
             }
         },
         deletetask(){
@@ -299,28 +298,24 @@ let interval = null;
 <style>
 .todo-container{
     margin: 20px 20px;
-    /* border: 0.1px solid rgba(41, 41, 41, .2); */
     border-radius: 15px;
     padding: 20px;
     width: 270px;
     height: auto;
     position: relative;
+    z-index: 0;
 }
 .done-yet{
-    /* ニューモーフィズムデザインでやってみる */
-    /* background: linear-gradient(145deg, #e6e6e6, #ffffff);
-    box-shadow:  11px 11px 22px #757575, 
-                -11px -11px 22px #ffffff; */
 background: linear-gradient(145deg, #fefefe, #d5d5d5);
 box-shadow:  5px 5px 15px #5f5f5f, 
              -5px -5px 15px #ffffff;
 }
 
+.edit-task__content{
+    z-index: 1 !important;
+    /* position: static; */
+}
 .done{
-    /* ニューモーフィズムデザインでやってみる */
-              /* background: #d0d0d0;
-box-shadow: inset 5px 5px 7px #535353, 
-            inset -5px -5px 7px #ffffff; */
             background: #81eeb6;
 box-shadow: inset 5px 5px 15px #345f49, 
             inset -5px -5px 15px #ceffff;
