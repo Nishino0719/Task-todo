@@ -74,7 +74,6 @@ export default {
             visible:false,
             drawer:false,
             tags:[],
-            level:1,
               pickerOptions: {
                 disabledDate(time) {
                   return time.getTime() < Date.now();
@@ -119,7 +118,7 @@ export default {
             },
             rules: {
                     tag: [
-                    {required: true, message: '課題を選択してください！', trigger: 'change' }
+                    {required: true, message: 'タグを選択してください！', trigger: 'change' }
                 ],
                     date1: [
                     { type: 'date', required: true, message: '日付を選んでください！', trigger: 'change' }
@@ -225,7 +224,6 @@ export default {
             type: 'success'
           });
         }else{
-          console.log('errorですよ')
           if(this.ruleForm.tag === 'タグを追加'){
             // alert('「タグを追加」はタグとして使うことができません。')
             this.$message({
