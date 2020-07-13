@@ -19,7 +19,7 @@
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <!-- <el-menu-item index="2">
+          <el-menu-item index="2"  disabled>
             <span slot="title">チャンネルの追加</span>
             <i class="el-icon-plus"><el-button  type="text" @click="dialogFormVisible = true"></el-button></i>
             
@@ -36,7 +36,7 @@
                           <el-button type="primary" @click="dialogFormVisible = false,submitChannelForm('channelForm')">追加</el-button>
                         </span>
                     </el-dialog>
-          </el-menu-item> -->
+          </el-menu-item>
           <el-menu-item index="3">
               <i class="el-icon-user"></i>
               <span slot="title">
@@ -48,9 +48,15 @@
               <span slot="title">使い方</span>
           </el-menu-item>
           <el-menu-item index="5">
+            <i class="el-icon-phone"></i>
+            <span slot="title">
+                <el-link type="primary" href="https://www.notion.so/77b4747df8ec41df807afd978f3d4f17" target="_blank" :underline="false">ご要望</el-link>
+            </span>
+          </el-menu-item>
+          <!-- <el-menu-item index="5"  disabled>
             <i class="el-icon-setting"></i>
             <span slot="title">設定</span>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-menu>
         </div>
       </div>

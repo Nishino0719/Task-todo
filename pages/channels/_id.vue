@@ -63,12 +63,7 @@ export default {
               }
           })
       })
-      db.collection('channels').doc(channelId).collection('tags').get()
-      .then((querySnapshot)=>{
-        querySnapshot.forEach((doc) =>{
-          this.tags.push({id: doc.id, ...doc.data()})
-        })
-      })
+      /
       db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
         snapshot.docChanges().forEach((change)=>{
           const doc = change.doc
