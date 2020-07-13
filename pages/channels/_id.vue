@@ -64,7 +64,6 @@ export default {
               }
           })
       })
-      /
       db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
         snapshot.docChanges().forEach((change)=>{
           const doc = change.doc
