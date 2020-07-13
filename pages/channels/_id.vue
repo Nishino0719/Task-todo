@@ -22,7 +22,7 @@
         <Todos :tasks="tasks"/>
       </div>
       <div  class="add-todo_container">
-        <AddTodo />
+        <AddTodo  v-if="isAuthenticated"/>
       </div>
   </div>
 </template>
