@@ -55,6 +55,12 @@
                 <el-link type="primary" href="https://www.notion.so/77b4747df8ec41df807afd978f3d4f17" target="_blank" :underline="false">ご要望</el-link>
             </span>
           </el-menu-item>
+          <el-menu-item index="6">
+            <i class="el-icon-warning"></i>
+            <span slot="title">
+              <el-link type="primary" href="https://www.notion.so/98b3b193be4147b0b5fdfc447db30e35" target="_blank" :underline="false">利用規約</el-link>
+            </span>
+          </el-menu-item>
           <!-- <el-menu-item index="5"  disabled>
             <i class="el-icon-setting"></i>
             <span slot="title">設定</span>
