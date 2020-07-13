@@ -37,7 +37,7 @@
                     </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="課題締め切り" required>
+                <el-form-item label="タスク締め切り" required>
                     <el-col :span="11">
                     <el-form-item prop="date1">
                         <el-date-picker type="date" placeholder="日付を選んでね！" v-model="ruleForm.date1" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
@@ -50,7 +50,7 @@
                     </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="未来の自分へ" prop="text">
+                <el-form-item label="詳細" prop="text">
                     <el-input type="textarea" v-model="ruleForm.text"></el-input>
                 </el-form-item>
             </el-form>
