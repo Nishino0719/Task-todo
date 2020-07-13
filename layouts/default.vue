@@ -45,7 +45,9 @@
           </el-menu-item>
           <el-menu-item index="4">
               <i class="el-icon-question"></i>
-              <span slot="title">使い方</span>
+              <span slot="title">
+                <el-link type="primary" href="https://www.notion.so/b70f84ea758f400cb0fca4892b407d04" target="_blank" :underline="false">使い方</el-link>
+              </span>
           </el-menu-item>
           <el-menu-item index="5">
             <i class="el-icon-phone"></i>
