@@ -19,10 +19,10 @@
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-menu-item index="2">
+          <!-- <el-menu-item index="2">
             <span slot="title">チャンネルの追加</span>
             <i class="el-icon-plus"><el-button  type="text" @click="dialogFormVisible = true"></el-button></i>
-            <!-- <el-button  type="text" @click="dialogFormVisible = true"><i class="el-icon-plus"></i></el-button> -->
+            
                      <el-dialog title="チャンネルを新しく追加する" :visible.sync="dialogFormVisible">
                         <el-form :model="channelForm">
                           <el-form-item label="">
@@ -36,10 +36,12 @@
                           <el-button type="primary" @click="dialogFormVisible = false,submitChannelForm('channelForm')">追加</el-button>
                         </span>
                     </el-dialog>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="3">
               <i class="el-icon-user"></i>
-              <span slot="title">アカウント切り替え</span>
+              <span slot="title">
+                <el-link type="primary" href="/" :underline="false">アカウント切り替え</el-link>
+              </span>
           </el-menu-item>
           <el-menu-item index="4">
               <i class="el-icon-question"></i>

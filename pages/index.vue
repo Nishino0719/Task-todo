@@ -90,4 +90,25 @@ export default {
   margin-top: 36px;
 }
 
+@media screen and (max-width: 480px){
+  .account-container{
+  width: 50px;
+  }
+  .logout{
+    position: absolute;
+    right: -45px;
+    margin-top: 36px;
+    font-size: 10px;
+    
+  }
+  .thumnail{
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+    position: absolute;
+    right: -45px;
+  }
+}
+
 </style>

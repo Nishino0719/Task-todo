@@ -1,17 +1,21 @@
 <template>
   <div class="container">
       <div class="todos-title_container">
-        <h3 class="channel-name">{{channel}}</h3>
-        <el-link type="primary" class="top-link" href="/" :underline="false">TOPへ</el-link>
-        <div class="" v-bind:key="tag.key" v-for="tag in tags">
-          <div class="" v-if="user.uid === tag.user.uid">
-            <el-tag class="subject-tag" size="medium" type="primary" effect="plain" closable   :disable-transitions="false" @close="deleteTag(tag)">{{tag.tag}}</el-tag>
+        <div class="title-container">
+          <h3 class="channel-name">{{channel}}</h3>
+          <el-link type="primary" class="top-link" href="/" :underline="false">TOPへ</el-link>
+        </div>
+        <div class="tags-container">
+          <div v-bind:key="tag.key" v-for="tag in tags">
+              <el-tag  v-if="user.uid === tag.user.uid" class="subject-tag" size="medium" type="primary" effect="plain" closable   :disable-transitions="false" @close="deleteTag(tag)">{{tag.tag}}</el-tag>
           </div>
         </div>
-        <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
-        <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
-            <el-button slot="reference" size="mini" v-if="isAuthenticated" type="info" class="logout" plain>ログアウト</el-button>
-        </el-popconfirm>
+        <div class="account-container">
+          <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
+          <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
+              <el-button slot="reference" size="mini" v-if="isAuthenticated" type="info" class="logout" plain>ログアウト</el-button>
+          </el-popconfirm>
+        </div>
       </div>
       <div class="todos-container">
         <Todos :tasks="tasks"/>
@@ -65,6 +69,15 @@ export default {
           this.tags.push({id: doc.id, ...doc.data()})
         })
       })
+      db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
+        snapshot.docChanges().forEach((change)=>{
+          const doc = change.doc
+          const oldIndex = change.oldIndex
+          if(change.type === 'added'){
+            this.tags.push({id: doc.id, ...doc.data()})
+          }
+        })
+      }) 
       
       const docRef = db.collection('channels').doc(channelId)
       docRef.get().then((doc)=>{
@@ -124,13 +137,53 @@ export default {
   .item{
     margin: 20px;
   }
-
+.title-container{
+  display: flex;
+}
 .channel-name{
   margin: 30px;
   margin-top: 20px; 
+  width: 160px;
 }
+
 .top-link{
   text-align: center;
+}
+@media screen and (max-width: 480px){
+    .title-container{
+      display:block;
+      width: 80px;
+    }
+    .channel-name{
+        margin: 10px;
+        margin-top: 20px; 
+        font-size: 10px;
+        width: 100px;
+    }
+    .top-link{
+      font-size: 10px;
+      width: 50px;
+    }
+}
+.tags-container{
+  width: 60vw;
+  display: flex;
+  overflow-x: scroll;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 480px){
+  .tags-container{
+    width: 170px;
+    display: flex;
+    overflow-x: scroll;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+.account-container{
+  width: 15vw;
 }
 
 .subject-tag{
@@ -151,6 +204,22 @@ export default {
     position: absolute;
     right: 40px;
   }
+@media screen and (max-width: 480px){
+  .account-container{
+    position: relative;
+    left: 20px;
+  }
+  .logout{
+    margin-top: 36px;
+    font-size: 10px;
+  }
+  .thumnail{
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+  }
+}
 
   .todos-container{
     height: 70vh;

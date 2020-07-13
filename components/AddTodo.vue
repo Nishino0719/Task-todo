@@ -249,8 +249,11 @@ export default {
       db.collection('channels').doc(channelId).collection('tags').onSnapshot((snapshot)=>{
         snapshot.docChanges().forEach((change)=>{
           const doc = change.doc
+          const oldIndex = change.oldIndex
           if(change.type === 'added'){
             this.tags.push({id: doc.id, ...doc.data()})
+          }if(change.type === 'removed'){
+            this.tags.splice(oldIndex,1)
           }
         })
       })       
