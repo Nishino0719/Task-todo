@@ -10,10 +10,11 @@
               <el-tag  v-if="user.uid === tag.user.uid" class="subject-tag" size="medium" type="primary" effect="plain" closable   :disable-transitions="false" @close="deleteTag(tag)">{{tag.tag}}</el-tag>
           </div>
         </div>
-        <div class="account-container">
-          <img  v-if="isAuthenticated" :src="user.photoURL"  class="thumnail">
+        <div class="account-container" v-if="isAuthenticated" >
+          <img :src="user.photoURL"  class="thumnail">
+          <h4 class="user-name">{{user.displayName}}</h4>
           <el-popconfirm @onConfirm="logout" confirmButtonText='はい' cancelButtonText='いいえ' icon="el-icon-info"  title="本当にログアウトしますか">
-              <el-button slot="reference" size="mini" v-if="isAuthenticated" type="info" class="logout" plain>ログアウト</el-button>
+              <el-button slot="reference" size="mini" type="info" class="logout" plain>ログアウト</el-button>
           </el-popconfirm>
         </div>
       </div>
@@ -199,6 +200,11 @@ export default {
     position: absolute;
     right: 40px;
   }
+  .user-name{
+    position: absolute;
+    top: 5px;
+    right: 70px;
+  }
 @media screen and (max-width: 480px){
   .account-container{
     position: relative;
@@ -213,6 +219,12 @@ export default {
     width: 25px;
     height: 25px;
     margin-top: 5px;
+  }
+  .user-name{
+    top: 5px;
+    right: 30px;
+    font-size: 10px;
+    width: 100px;
   }
 }
 
